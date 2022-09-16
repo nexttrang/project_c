@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "SFProDisplay";
+    src: local("SFProDisplay"),
+        url("../assets/fonts/SF-Pro-Display-Black.ttf") format("truetype");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "SFPro";
+    src: local("SFPro"),
+        url("../assets/fonts/SF-Pro-Display-Semibold.ttf") format("truetype");
+    font-weight: normal;
+}

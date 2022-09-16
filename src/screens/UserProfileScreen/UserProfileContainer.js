@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Container, Stack } from '@mui/material';
-import { Box, Divider, Typography } from '@material-ui/core';
+import { Button, Container, Stack } from '@mui/material';
+import { Avatar, Box, Divider, Typography } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import { loadLocalNativeBalance, loadLocalSignature } from '../../lib/services/moralisService';
 import { makeStyles } from '@material-ui/styles';
 
 import MetaMaskButton from '../../components/MeataMaskButton/MetaMaskButton';
+import { mappingGoogleAccountAction } from '../../lib/redux/actions/AuthActions';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
@@ -18,11 +19,21 @@ const UserProfileContainer = (props) => {
         loadLocalNativeBalance(dispatch);
     }, [balance, address, signature]);
 
+    const onMappingGoogle = () => {
+        dispatch(mappingGoogleAccountAction());
+    };
+
     return (
         <Container>
             <Box className={classes.infoContainer}>
-                <Typography className={classes.title}>Email:</Typography>
-                <Typography className={classes.content}>{auth.email}</Typography>
+                <Button onClick={onMappingGoogle}>Mapping with Google account</Button>
+                <Avatar
+                    alt={auth.displayName}
+                    src={auth.avatar}
+                    sx={{ width: 56, height: 56 }}
+                />
+                <Typography className={classes.content}>Email: {auth.email}</Typography>
+                <Typography className={classes.content}>DisplayName: {auth.displayName}</Typography>
             </Box>
 
             <Divider variant="middle" />

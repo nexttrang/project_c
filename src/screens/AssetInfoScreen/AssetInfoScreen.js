@@ -1,7 +1,6 @@
 import { Box, Button, ButtonBase, Container, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/styles';
 import { Stack } from '@mui/material';
-import { collection } from 'firebase/firestore/lite';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CommonHeader from '../../components/Header/CommonHeader';

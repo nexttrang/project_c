@@ -1,0 +1,12 @@
+.icon_inner {
+  position: relative;
+  margin: auto;
+}
+
+.bg_icon {
+  background-image: url("../../assets/images/icon_m_dark.webp");
+  background-position: center;
+  align-items: center;
+  display: flex;
+  border-radius: 50%;
+}

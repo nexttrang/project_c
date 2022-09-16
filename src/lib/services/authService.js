@@ -1,35 +1,6 @@
-import axios from 'axios';
 import { confirmedLoginAction, logoutAction } from '../redux/actions/AuthActions';
 
 export const keyUserDetails = 'user_details';
-
-export function singUp(email, password) {
-
-    const postData = {
-        email,
-        password,
-        returnSecureToken: true,
-    };
-
-    return axios.post(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDU92RhM4bsl2Su0pKrl8g20fMWISS9wl4',
-        postData
-    );
-}
-
-export function login(email, password) {
-
-    const postData = {
-        email,
-        password,
-        returnSecureToken: true,
-    };
-
-    return axios.post(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDU92RhM4bsl2Su0pKrl8g20fMWISS9wl4',
-        postData
-    );
-}
 
 export function formatError(errorResponse) {
 
@@ -62,24 +33,40 @@ export function runLogOutTimer(dispatch, timer) {
     }, timer);
 }
 
-export function checkAutoLogin(dispatch) {
+function loadLocalUserData() {
     const tokenDetailsString = localStorage.getItem(keyUserDetails);
-    let tokenDetails = '';
     if (!tokenDetailsString) {
+        return '';
+    }
+
+    return JSON.parse(tokenDetailsString);
+}
+
+export function checkAutoLogin(dispatch) {
+    let localData = loadLocalUserData();
+    if (!localData) {
         dispatch(logoutAction());
         return;
     }
 
-    tokenDetails = JSON.parse(tokenDetailsString);
-    let expireDate = new Date(tokenDetails.expireDate);
+    let expireDate = new Date(localData.expireDate);
     let todaysDate = new Date();
 
     if (todaysDate > expireDate) {
         dispatch(logoutAction());
         return;
     }
-    dispatch(confirmedLoginAction(tokenDetails));
+    dispatch(confirmedLoginAction(localData));
 
     const timer = expireDate.getTime() - todaysDate.getTime();
     runLogOutTimer(dispatch, timer);
+}
+
+export function saveGoogleAccountInLocalStorage(data) {
+    const localData = loadLocalUserData();
+    if (!localData) {
+        return;
+    }
+
+    localStorage.setItem(keyUserDetails, JSON.stringify({ ...localData, ...data }));
 }

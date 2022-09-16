@@ -3,7 +3,7 @@ const errorMessage = (state) => state.auth.errorMessage;
 const successMessage = (state) => state.auth.successMessage;
 
 const isAuthenticated = state => {
-    if (state.auth.auth.idToken) return true;
+    if (state.auth.auth.accessToken) return true;
     return false;
 };
 

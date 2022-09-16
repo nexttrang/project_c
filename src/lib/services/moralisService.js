@@ -3,7 +3,7 @@ import { EvmChain } from '@moralisweb3/evm-utils';
 import { confirmImportNativeBalanceAction, confirmMetaMaskVerify } from '../redux/actions/MoralisAction';
 
 Moralis.start({
-    apiKey: 'LDMIiUu2txS8cb5WKPLjoEjWPI66Ii1PRaYU6sAibLzZpZ3svdIuqwUDIXGai9RL',
+    apiKey: process.env.REACT_APP_MORALIS_API_KEY,
 });
 
 export const keyNativeBalance = 'native_balance';

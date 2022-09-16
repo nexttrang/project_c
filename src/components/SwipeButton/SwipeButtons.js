@@ -5,6 +5,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import { Box, makeStyles } from '@material-ui/core';
 import InfoIcon from '@mui/icons-material/Info';
+import CircleButton from '../CircleButton/CircleButton';
+import iconDislike from '../../assets/images/icon_dislike.webp';
+import iconLike from '../../assets/images/icon_like.webp';
+import iconRestore from '../../assets/images/icon_restore.webp';
+import iconInfo from '../../assets/images/icon_info.webp';
 
 const SwipeButtons = ({
     onRestoreCard,
@@ -16,51 +21,37 @@ const SwipeButtons = ({
 
     return (
         <Box className={classes.swipeButtons}>
-            <IconButton className={classes.repeat} onClick={() => onRestoreCard()}>
-                <ReplayIcon fontSize="large" />
+            <IconButton className={classes.restoreButton} onClick={() => onRestoreCard()}>
+                <CircleButton icon={iconRestore} type='smaller' />
             </IconButton>
-            <IconButton className={classes.left} onClick={() => onSwipeLeft()}>
-                <CloseIcon fontSize="large" />
+            <IconButton onClick={() => onSwipeLeft()}>
+                <CircleButton icon={iconDislike} />
             </IconButton>
-            <IconButton className={classes.right} onClick={() => onSwipeRight()}>
-                <FavoriteIcon fontSize="large" />
+            <IconButton onClick={() => onSwipeRight()}>
+                <CircleButton icon={iconLike} />
             </IconButton>
-            <IconButton className={classes.info} onClick={() => onAssetInfo()}>
-                <InfoIcon fontSize="large" />
+            <IconButton className={classes.infoButton} onClick={() => onAssetInfo()}>
+                <CircleButton icon={iconInfo} type='smaller' />
             </IconButton>
-
         </Box>
     );
 };
 
 const useStyles = makeStyles({
     swipeButtons: {
-        position: 'fixed',
-        bottom: '10vh',
+        position: 'absolute',
+        bottom: '8.3vh',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-evenly',
+        // border: '1px solid red'
     },
-    repeat: {
-        padding: '3vw !important',
-        color: '#f5b748 !important',
+    restoreButton: {
+        marginLeft: '23vw'
     },
-    left: {
-        padding: '3vw !important',
-        color: '#ec5e6f !important',
-    },
-    info: {
-        padding: '3vw !important',
-        color: '#62b4f9 !important',
-    },
-    right: {
-        padding: '3vw !important',
-        color: '#76e2b3 !important',
-    },
-    lightning: {
-        padding: '3vw !important',
-        color: '#915dd1 !important',
-    },
+    infoButton: {
+        marginRight: '23vw'
+    }
 });
 
 export default SwipeButtons;

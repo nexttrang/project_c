@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-image: url("../assets/images/icon_background_dark_@2x.webp");
+    background-attachment: fixed;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+}

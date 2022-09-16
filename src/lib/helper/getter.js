@@ -18,6 +18,27 @@ const getBlockchainInfo = (schema_version) => {
     }
 };
 
+const parseGuestUserData = (json) => {
+    return {
+        uid: json.uid,
+        emailVerified: json.emailVerified,
+        isAnonymous: json.isAnonymous,
+        refreshToken: json.stsTokenManager.refreshToken,
+        accessToken: json.stsTokenManager.accessToken,
+        expiresIn: '3600',
+    };
+};
+
+const parseMappingGoogleAccountData = (json) => {
+    return {
+        email: json.email,
+        displayName: json.displayName,
+        avatar: json.photoURL
+    };
+};
+
 export default {
     getBlockchainInfo,
+    parseGuestUserData,
+    parseMappingGoogleAccountData
 };

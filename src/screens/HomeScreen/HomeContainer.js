@@ -1,16 +1,16 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import TinderCard from 'react-tinder-card';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, Container, makeStyles } from '@material-ui/core';
 import SwipeButtons from '../../components/SwipeButton/SwipeButtons';
 import Like from '../../assets/images/LIKE.png';
 import Nope from '../../assets/images/nope.png';
-import { Typography } from '@mui/material';
-import colors from '../../assets/colors';
+import { Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { importAssets } from '../../lib/redux/actions/AssetActions';
 import { useNavigate } from 'react-router-dom';
 import { navigateToAssetInfo } from '../../lib/helper/navigator';
 import { fetchAssests } from '../../lib/services/openseaService';
+import './Home.css';
 
 function HomeContainer() {
     const classes = useStyles();
@@ -41,7 +41,7 @@ function HomeContainer() {
     const loadAssests = useCallback((cursor, useCase = 'current') => {
         fetchAssests(cursor).then(response => {
             const data = response.data;
-            console.log(data);
+            // console.log(data);
 
             if (useCase === 'current') {
                 setAssests(data.assets.map(_asset => {
@@ -82,11 +82,11 @@ function HomeContainer() {
         assets[index].swipe = direction;
         updateCurrentIndex(index - 1);
 
-        console.log(`swiped: ${currentIndexRef.current}`);
+        // console.log(`swiped: ${currentIndexRef.current}`);
     };
 
     const outOfFrame = (name, idx) => {
-        console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+        // console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     };
 
     const swipeLeft = async () => {
@@ -106,7 +106,7 @@ function HomeContainer() {
     // increase current index and show card
     const goBack = async () => {
         if (prevAssests.length === 0) {
-            console.log('can not go back');
+            // console.log('can not go back');
             return;
         }
 
@@ -130,7 +130,7 @@ function HomeContainer() {
         asset.swipe = direction;
     };
 
-    const showAssetInfo = () => {
+    const navigateAssetInfo = () => {
         navigateToAssetInfo(navigate, assets[currentIndex].asset_contract.address, assets[currentIndex].token_id);
     };
 
@@ -167,7 +167,7 @@ function HomeContainer() {
     }, [assets]);
 
     useEffect(() => {
-        console.log(`here current index: ${currentIndex}`);
+        // console.log(`here current index: ${currentIndex}`);
         setCanSwipe(currentIndex >= 0);
 
         if (currentIndex < 0) { //move next assests to current assets
@@ -177,39 +177,45 @@ function HomeContainer() {
         }
     }, [currentIndex]);
 
+    const showCardInfo = (asset) => {
+        return (
+            <Stack spacing={2} className={classes.cardInfoContainer}>
+                <span className='card_name'>{asset.name}</span>
+                <span className='card_description'>{asset.description}</span>
+            </Stack>
+        );
+    };
+
     return (
         <Box>
             <Box className={classes.container}>
                 {assets.map(
                     (asset, index) => (index >= currentIndex - 1) && (
-                        <TinderCard
-                            ref={childRefs[index]}
-                            className={classes.swipe}
-                            key={asset.id}
-                            onSwipe={(dir) => swiped(dir, asset.name, index)}
-                            onCardLeftScreen={() => outOfFrame(asset.name, index)}
-                            swipeRequirementType="position"
-                            swipeThreshold="100"
-                            onSwipeRequirementFulfilled={(direction) =>
-                                onSwipeFullfilled(asset, direction)
-                            }
-                            onSwipeRequirementUnfulfilled={(direction) =>
-                                onSwipeUnFullfilled(asset, direction)
-                            }
-                        >
+                        <Box key={asset.id} style={{ justifyContent: 'center', display: 'flex' }}>
+                            <TinderCard
+                                ref={childRefs[index]}
+                                className={classes.swipe}
+                                onSwipe={(dir) => swiped(dir, asset.name, index)}
+                                onCardLeftScreen={() => outOfFrame(asset.name, index)}
+                                swipeRequirementType="position"
+                                swipeThreshold="100"
+                                onSwipeRequirementFulfilled={(direction) =>
+                                    onSwipeFullfilled(asset, direction)
+                                }
+                                onSwipeRequirementUnfulfilled={(direction) =>
+                                    onSwipeUnFullfilled(asset, direction)
+                                }
+                            >
 
-                            <Box style={{ backgroundImage: `url(${asset.image_url})`, }} className={classes.card} />
+                                <Box style={{ backgroundImage: `url(${asset.image_url})`, }} className={classes.card} />
 
-                            {asset.swipe === 'right' && (<Box className={classes.like} component="img" src={Like} />)}
-                            {asset.swipe === 'left' && (<Box className={classes.nope} component="img" src={Nope} />)}
+                                {asset.swipe === 'right' && (<Box className={classes.like} component="img" src={Like} />)}
+                                {asset.swipe === 'left' && (<Box className={classes.nope} component="img" src={Nope} />)}
 
-                            <Box className={classes.cardInfoContainer}>
-                                <Typography className={classes.cardTextName}>{asset.name}</Typography>
-                                <Typography className={classes.cardShortDescription}>{asset.description}</Typography>
-                                <Typography className={classes.cardLocation}>Sales : {asset.num_sales}</Typography>
-                            </Box>
+                            </TinderCard>
 
-                        </TinderCard>
+                            {index === currentIndex && showCardInfo(asset)}
+                        </Box>
                     )
                 )}
             </Box>
@@ -218,7 +224,7 @@ function HomeContainer() {
                 onRestoreCard={goBack}
                 onSwipeLeft={swipeLeft}
                 onSwipeRight={swipeRight}
-                onAssetInfo={showAssetInfo}
+                onAssetInfo={navigateAssetInfo}
             />
         </Box >
     );
@@ -226,19 +232,20 @@ function HomeContainer() {
 
 const useStyles = makeStyles({
     container: {
-        display: 'flex',
+        display: 'block',
         justifyContent: 'center',
-        marginTop: '5vh',
+        marginTop: '2.3vh',
+        // border: '1px solid red'
     },
     swipe: {
         position: 'absolute',
     },
     card: {
         position: 'relative',
-        width: 600,
+        width: '91.7vw',
+        height: '54.9vh',
         padding: 20,
         maxWidth: '85vw',
-        height: '50vh',
         borderRadius: 20,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -262,45 +269,18 @@ const useStyles = makeStyles({
         zIndex: 1,
         elevation: 1,
     },
-    cardTextName: {
-        color: colors.white,
-        position: 'absolute',
-        top: 10,
-        left: 10,
-        elevation: 1,
-    },
-    cardShortDescription: {
-        color: colors.white,
-        position: 'absolute',
-        top: 30,
-        left: 10,
-        elevation: 1,
-    },
-    cardLocation: {
-        color: colors.white,
-        position: 'absolute',
-        top: 50,
-        left: 10,
-        elevation: 1,
-    },
     cardInfoContainer: {
         position: 'absolute',
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        maxWidth: '85vw',
-        height: '10vh',
-        borderRadius: 20,
-        bottom: 10,
-        left: 10,
-        right: 10,
+        maxWidth: '100%',
+        height: '8vh',
+        left: '14.6vw',
+        right: '14.6vw',
+        top: '66vh',
         elevation: 1,
-    },
-    infoIcon: {
-        position: 'absolute',
-        right: 10,
-        top: 10,
-        color: '#b32400',
-        elevation: 2,
-    },
+        display: 'flex',
+        justifyContent: 'center',
+        // border: '1px solid red'
+    }
 });
 
 export default HomeContainer;
