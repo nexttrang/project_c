@@ -1,6 +1,6 @@
 .card_name {
     font-family: "SFProDisplay";
-    font-size: 1.872em;
+    font-size: 1.248em;
     font-weight: 900;
     font-stretch: normal;
     font-style: normal;
@@ -16,7 +16,7 @@
 .card_description {
     object-fit: contain;
     font-family: "SFPro";
-    font-size: 1.248em;
+    font-size: 0.874em;
     font-weight: 600;
     font-stretch: normal;
     font-style: normal;
@@ -29,7 +29,7 @@
     display: -webkit-box;
     line-height: 16px;
     /* fallback */
-    max-height: 32px;
+    max-height: 60px;
     /* fallback */
     -webkit-line-clamp: 3;
     /* number of lines to show */

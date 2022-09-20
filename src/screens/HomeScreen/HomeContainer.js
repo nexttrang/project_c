@@ -272,14 +272,14 @@ const useStyles = makeStyles({
     cardInfoContainer: {
         position: 'absolute',
         maxWidth: '100%',
-        height: '10vh',
+        height: '12vh',
         left: '14.6vw',
         right: '14.6vw',
         top: '70vh',
         elevation: 1,
         display: 'flex',
-        justifyContent: 'center',
-        // border: '1px solid red'
+        justifyContent: 'top',
+        border: '1px solid red'
     }
 });
 
