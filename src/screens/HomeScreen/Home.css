@@ -1,6 +1,6 @@
 .card_name {
     font-family: "SFProDisplay";
-    font-size: 34px;
+    font-size: 1.872em;
     font-weight: 900;
     font-stretch: normal;
     font-style: normal;
@@ -16,7 +16,7 @@
 .card_description {
     object-fit: contain;
     font-family: "SFPro";
-    font-size: 20px;
+    font-size: 1.248em;
     font-weight: 600;
     font-stretch: normal;
     font-style: normal;

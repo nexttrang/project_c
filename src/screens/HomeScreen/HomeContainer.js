@@ -272,10 +272,10 @@ const useStyles = makeStyles({
     cardInfoContainer: {
         position: 'absolute',
         maxWidth: '100%',
-        height: '8vh',
+        height: '10vh',
         left: '14.6vw',
         right: '14.6vw',
-        top: '66vh',
+        top: '70vh',
         elevation: 1,
         display: 'flex',
         justifyContent: 'center',

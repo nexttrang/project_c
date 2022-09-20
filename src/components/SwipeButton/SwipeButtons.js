@@ -1,10 +1,6 @@
 import React from 'react';
-import ReplayIcon from '@material-ui/icons/Replay';
-import CloseIcon from '@material-ui/icons/Close';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import { Box, makeStyles } from '@material-ui/core';
-import InfoIcon from '@mui/icons-material/Info';
 import CircleButton from '../CircleButton/CircleButton';
 import iconDislike from '../../assets/images/icon_dislike.webp';
 import iconLike from '../../assets/images/icon_like.webp';
