@@ -36,7 +36,7 @@ const SwipeButtons = ({
 const useStyles = makeStyles({
     swipeButtons: {
         position: 'absolute',
-        bottom: '8.3vh',
+        bottom: '4vh',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-evenly',
