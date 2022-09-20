@@ -279,7 +279,7 @@ const useStyles = makeStyles({
         elevation: 1,
         display: 'flex',
         justifyContent: 'top',
-        border: '1px solid red'
+        // border: '1px solid red'
     }
 });
 
