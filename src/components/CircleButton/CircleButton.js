@@ -4,8 +4,8 @@ import './CircleButton.css';
 const CircleButton = (props) => {
     const { icon, type } = props;
 
-    const getSizeBG = () => type === 'smaller' ? '97px' : '136.8px';
-    const getSizeIcon = () => type === 'smaller' ? '40.9px' : '52.7px';
+    const getSizeBG = () => type === 'smaller' ? '50px' : '70px';
+    const getSizeIcon = () => type === 'smaller' ? '20px' : '30px';
 
     return (
         <div className='bg_icon' style={{ width: getSizeBG(), height: getSizeBG() }}>
