@@ -1,4 +1,3 @@
-import { GoogleAuthProvider } from 'firebase/auth';
 import getter from '../../helper/getter';
 import { formatError, keyUserDetails, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage } from '../../services/authService';
 import { getMappingAccountResult, loginGuestUser } from '../../services/firebaseService';

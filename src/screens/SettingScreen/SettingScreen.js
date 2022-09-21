@@ -1,13 +1,4 @@
 import * as React from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { Container } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
-import PolicyOutlinedIcon from '@mui/icons-material/PolicyOutlined';
-import GavelOutlinedIcon from '@mui/icons-material/GavelOutlined';
 import { connect, useDispatch } from 'react-redux';
 import { logoutAction } from '../../lib/redux/actions/AuthActions';
 import { disconnectWalletAction } from '../../lib/redux/actions/MoralisAction';

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, getRedirectResult, GoogleAuthProvider, signInAnonymously, signInWithPopup, signInWithRedirect } from 'firebase/auth';
+import { getAuth, getRedirectResult, GoogleAuthProvider, signInAnonymously, signInWithRedirect } from 'firebase/auth';
 import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp } from 'firebase/firestore/lite';
 
 const firebaseConfig = {

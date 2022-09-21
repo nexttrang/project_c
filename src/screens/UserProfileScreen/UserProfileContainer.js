@@ -1,22 +1,17 @@
 import React, { useEffect } from 'react';
-import { Button, Container, Stack } from '@mui/material';
-import { Avatar, Box, Divider, Typography } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import { loadLocalNativeBalance, loadLocalSignature } from '../../lib/services/moralisService';
-import { makeStyles } from '@material-ui/styles';
 import './UserProfile.css';
 
 import MetaMaskButton from '../../components/MeataMaskButton/MetaMaskButton';
-import { mappingGoogleAccountAction } from '../../lib/redux/actions/AuthActions';
 import LongLabelChip from '../../components/LongLabelChip';
-import ShortButton from '../../components/ShortButton';
 import LongButton from '../../components/LongButton/LongButton';
 import { signInWithGoogle } from '../../lib/services/firebaseService';
+import { Stack } from '@mui/material';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
-
-    const classes = useStyles();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,7 +21,6 @@ const UserProfileContainer = (props) => {
 
     const onMappingGoogle = () => {
         signInWithGoogle();
-        // dispatch(mappingGoogleAccountAction());
     };
 
     const showEmail = () => {
@@ -73,25 +67,6 @@ const UserProfileContainer = (props) => {
         </div>
     );
 };
-
-const useStyles = makeStyles({
-    infoContainer: {
-        marginTop: 15,
-        marginBottom: 15,
-    },
-    walletContainer: {
-        width: 500,
-        maxWidth: '100%',
-        marginTop: 15
-    },
-    content: {
-        marginTop: 10,
-        marginLeft: 15,
-    },
-    title: {
-        textDecorationLine: 'underline',
-    }
-});
 
 const mapStateToProps = (state) => {
     return {
