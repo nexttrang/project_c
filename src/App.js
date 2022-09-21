@@ -5,6 +5,7 @@ import AuthSelector from './lib/redux/selectors/AuthSelector';
 import { checkAutoLogin } from './lib/services/authService';
 import './styles/App.css';
 import DebugScreen from './screens/DebugScreen/DebugScreen';
+import { mappingGoogleAccountAction } from './lib/redux/actions/AuthActions';
 
 const LoginScreen = lazy(() => import('./screens/LoginScreen'));
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
@@ -24,6 +25,7 @@ const App = () => {
 
     useEffect(() => {
         checkAutoLogin(dispatch);
+        dispatch(mappingGoogleAccountAction());
     }, []);
 
     return (

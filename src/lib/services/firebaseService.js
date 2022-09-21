@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInAnonymously, signInWithPopup } from 'firebase/auth';
+import { getAuth, getRedirectResult, GoogleAuthProvider, signInAnonymously, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
@@ -44,7 +44,11 @@ export const loginGuestUser = () => {
 };
 
 export const signInWithGoogle = () => {
-    return signInWithPopup(auth, provider);
+    return signInWithRedirect(auth, provider);
+};
+
+export const getMappingAccountResult = () => {
+    return getRedirectResult(auth);
 };
 
 export default firebaseApp;

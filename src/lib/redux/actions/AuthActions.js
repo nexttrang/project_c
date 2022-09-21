@@ -1,6 +1,7 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import getter from '../../helper/getter';
 import { formatError, keyUserDetails, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage } from '../../services/authService';
-import { loginGuestUser, signInWithGoogle } from '../../services/firebaseService';
+import { getMappingAccountResult, loginGuestUser } from '../../services/firebaseService';
 
 
 export const SIGNUP_CONFIRM_ACTION = '[signup action] confirmed signup';
@@ -38,7 +39,8 @@ export function loginAction() {
 
 export function mappingGoogleAccountAction() {
     return (dispatch) => {
-        signInWithGoogle().then(result => {
+        getMappingAccountResult().then(result => {
+
             const data = getter.parseMappingGoogleAccountData(result.user);
 
             console.log(`result: ${JSON.stringify(data)}`);

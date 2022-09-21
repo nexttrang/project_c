@@ -11,6 +11,7 @@ import { mappingGoogleAccountAction } from '../../lib/redux/actions/AuthActions'
 import LongLabelChip from '../../components/LongLabelChip';
 import ShortButton from '../../components/ShortButton';
 import LongButton from '../../components/LongButton/LongButton';
+import { signInWithGoogle } from '../../lib/services/firebaseService';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
@@ -24,7 +25,8 @@ const UserProfileContainer = (props) => {
     }, [balance, address, signature]);
 
     const onMappingGoogle = () => {
-        dispatch(mappingGoogleAccountAction());
+        signInWithGoogle();
+        // dispatch(mappingGoogleAccountAction());
     };
 
     const showEmail = () => {
