@@ -14,6 +14,11 @@ import { disconnectWalletAction } from '../../lib/redux/actions/MoralisAction';
 import AuthSelector from '../../lib/redux/selectors/AuthSelector';
 import CommonHeader from '../../components/Header/CommonHeader';
 import { auth } from '../../lib/services/firebaseService';
+import './SettingScreen.css';
+import LabelArrowLongButton from '../../components/LabelArrowLongButton';
+import iconTerm from '../../assets/images/icon_term.webp';
+import iconPrivacy from '../../assets/images/icon_privacy.webp';
+import ShortButton from '../../components/ShortButton';
 
 const SettingScreen = () => {
     const dispatch = useDispatch();
@@ -25,63 +30,22 @@ const SettingScreen = () => {
         dispatch(disconnectWalletAction());
     };
 
-    const accountList = () => {
-        return (
-            <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        Account
-                    </ListSubheader>
-                }
-            >
-                <ListItemButton onClick={onLogout}>
-                    <ListItemIcon>
-                        <LogoutIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                </ListItemButton>
-            </List>
-        );
-    };
-
-    const aboutList = () => {
-        return (
-            <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        About
-                    </ListSubheader>
-                }
-            >
-                <ListItemButton>
-                    <ListItemIcon>
-                        <GavelOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Terms of Service" />
-                </ListItemButton>
-                <ListItemButton>
-                    <ListItemIcon>
-                        <PolicyOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Privacy Policy" />
-                </ListItemButton>
-            </List>
-        );
-    };
-
     return (
         <>
-            <CommonHeader backButton={'/home'} />
-            <Container>
-                {accountList()}
-                {aboutList()}
-            </Container>
+            <CommonHeader backButton={'/home'} title={'MENU'} />
+            <div className='container'>
+                <span className="title_menu">
+                    ABOUT
+                </span>
+
+                <LabelArrowLongButton icon={iconTerm} label={'Term Of Service'} />
+                <LabelArrowLongButton icon={iconPrivacy} label={'Privacy Policy'} />
+
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
+                    <ShortButton label={'LOGOUT'} onClick={onLogout} />
+                </div>
+            </div>
+
         </>
     );
 };

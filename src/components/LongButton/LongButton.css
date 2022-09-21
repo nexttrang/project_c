@@ -1,0 +1,32 @@
+.icon_frame_long_button {
+    width: 90.9vw;
+    height: 4.3vh;
+    padding: 0 2.8vw 0 2.8vw;
+    margin: 0.5vh 0 0.5vh 0;
+    background-image: url("../../assets/images/icon_frame.webp");
+    background-position: center;
+    align-items: center;
+    display: flex;
+    /* border: 1px solid red; */
+}
+
+.label_inner_long_button {
+    width: 80vw;
+    height: 4vh;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 4vh;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    /* border: 1px solid red; */
+}
+
+.icon_right_long_button {
+    width: 3vw;
+    height: 3vw;
+    /* border: 1px solid red; */
+}

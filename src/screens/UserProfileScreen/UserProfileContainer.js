@@ -4,9 +4,13 @@ import { Avatar, Box, Divider, Typography } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import { loadLocalNativeBalance, loadLocalSignature } from '../../lib/services/moralisService';
 import { makeStyles } from '@material-ui/styles';
+import './UserProfile.css';
 
 import MetaMaskButton from '../../components/MeataMaskButton/MetaMaskButton';
 import { mappingGoogleAccountAction } from '../../lib/redux/actions/AuthActions';
+import LongLabelChip from '../../components/LongLabelChip';
+import ShortButton from '../../components/ShortButton';
+import LongButton from '../../components/LongButton/LongButton';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
@@ -23,40 +27,48 @@ const UserProfileContainer = (props) => {
         dispatch(mappingGoogleAccountAction());
     };
 
+    const showEmail = () => {
+        return (
+            <>
+                <span className="title_menu">
+                    E-MAIL:
+                </span>
+
+                <LongButton label={auth.email ? auth.email : `Guest User: ${auth.uid}`} onClick={!auth.email ? onMappingGoogle : (() => { })} editable={!auth.email} />
+            </>
+        );
+    };
+
+    const showWallet = () => {
+        return (
+            <div style={{ marginTop: '1.5vh' }}>
+                <span className="title_menu">
+                    WALLET:
+                </span>
+
+                <LongLabelChip label={'Address'} value={`${address}`} />
+                <LongLabelChip label={'Balance'} value={`${balance}`} />
+                <LongLabelChip label={'Signature'} value={`${signature}`} />
+
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
+                    <MetaMaskButton />
+                </div>
+            </div>
+        );
+    };
+
     return (
-        <Container>
-            <Box className={classes.infoContainer}>
-                <Button onClick={onMappingGoogle}>Mapping with Google account</Button>
+        <div className='container'>
+            <Stack>
                 <Avatar
                     alt={auth.displayName}
                     src={auth.avatar}
-                    sx={{ width: 56, height: 56 }}
+                    style={{ width: '18.5vw', height: '18.5vw', margin: 'auto' }}
                 />
-                <Typography className={classes.content}>Email: {auth.email}</Typography>
-                <Typography className={classes.content}>DisplayName: {auth.displayName}</Typography>
-            </Box>
-
-            <Divider variant="middle" />
-
-            <Box className={classes.walletContainer}>
-                <Typography className={classes.title}>Wallet:</Typography>
-
-                <Box className={classes.content}>
-
-                    <Stack direction="row" spacing={2}>
-                        <MetaMaskButton />
-                    </Stack>
-
-                    <Box style={{ marginTop: 15 }} >
-                        <Typography >{`address: ${address}`}</Typography>
-                        <Typography >{`balance: ${balance}`}</Typography>
-                        <Typography >{`signature: ${signature}`}</Typography>
-                    </Box>
-
-                </Box>
-
-            </Box>
-        </Container>
+                {showEmail()}
+                {showWallet()}
+            </Stack>
+        </div>
     );
 };
 

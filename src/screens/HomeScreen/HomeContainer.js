@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import TinderCard from 'react-tinder-card';
-import { Box, Container, makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import SwipeButtons from '../../components/SwipeButton/SwipeButtons';
-import Like from '../../assets/images/LIKE.png';
-import Nope from '../../assets/images/nope.png';
+import Like from '../../assets/images/ic_tag_like.webp';
+import Nope from '../../assets/images/ic_tag_nope.webp';
 import { Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { importAssets } from '../../lib/redux/actions/AssetActions';
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { navigateToAssetInfo } from '../../lib/helper/navigator';
 import { fetchAssests } from '../../lib/services/openseaService';
 import './Home.css';
+import util from '../../lib/helper/util';
 
 function HomeContainer() {
     const classes = useStyles();
@@ -26,6 +27,7 @@ function HomeContainer() {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [canSwipe, setCanSwipe] = useState(false);
+    const [showTag, setShowTag] = useState('');
 
     // used for outOfFrame closure
     const currentIndexRef = useRef(currentIndex);
@@ -78,15 +80,17 @@ function HomeContainer() {
     }, []);
 
     // set last direction and decrease current index
-    const swiped = (direction, nameToDelete, index) => {
+    const swiped = async (direction, nameToDelete, index) => {
         assets[index].swipe = direction;
         updateCurrentIndex(index - 1);
+        console.log(`swiped: ${assets[index].swipe}`);
 
-        // console.log(`swiped: ${currentIndexRef.current}`);
+        await util.delay(500);
+        setShowTag('');
     };
 
     const outOfFrame = (name, idx) => {
-        // console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+        console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     };
 
     const swipeLeft = async () => {
@@ -124,10 +128,14 @@ function HomeContainer() {
 
     const onSwipeFullfilled = (asset, direction) => {
         asset.swipe = direction;
+        console.log(`onSwipeFullfilled: ${asset.swipe}`);
+        setShowTag(direction);
     };
 
     const onSwipeUnFullfilled = (asset, direction) => {
         asset.swipe = direction;
+        console.log(`onSwipeUnFullfilled: ${asset.swipe}`);
+        setShowTag(direction);
     };
 
     const navigateAssetInfo = () => {
@@ -186,6 +194,17 @@ function HomeContainer() {
         );
     };
 
+    const showTags = (asset) => {
+        switch (asset.swipe) {
+        case 'right':
+            return <Box className={classes.like} component="img" src={Like} />;
+        case 'left':
+            return <Box className={classes.nope} component="img" src={Nope} />;
+        default:
+            return <></>;
+        }
+    };
+
     return (
         <Box>
             <Box className={classes.container}>
@@ -195,6 +214,7 @@ function HomeContainer() {
                             <TinderCard
                                 ref={childRefs[index]}
                                 className={classes.swipe}
+                                preventSwipe={['up', 'down']}
                                 onSwipe={(dir) => swiped(dir, asset.name, index)}
                                 onCardLeftScreen={() => outOfFrame(asset.name, index)}
                                 swipeRequirementType="position"
@@ -209,8 +229,7 @@ function HomeContainer() {
 
                                 <Box style={{ backgroundImage: `url(${asset.image_url})`, }} className={classes.card} />
 
-                                {asset.swipe === 'right' && (<Box className={classes.like} component="img" src={Like} />)}
-                                {asset.swipe === 'left' && (<Box className={classes.nope} component="img" src={Nope} />)}
+                                {showTag === asset.swipe && showTags(asset)}
 
                             </TinderCard>
 
@@ -252,22 +271,24 @@ const useStyles = makeStyles({
         boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
     },
     like: {
-        width: 150,
-        height: 150,
+        width: '135px',
+        height: '60px',
         position: 'absolute',
-        top: 10,
-        left: 10,
+        top: 30,
+        left: 20,
         zIndex: 1,
         elevation: 1,
+        transform: 'rotate(-20deg)',
     },
     nope: {
-        width: 150,
-        height: 150,
+        width: '135px',
+        height: '60px',
         position: 'absolute',
-        top: 10,
-        right: 10,
+        top: 30,
+        right: 20,
         zIndex: 1,
         elevation: 1,
+        transform: 'rotate(20deg)',
     },
     cardInfoContainer: {
         position: 'absolute',

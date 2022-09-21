@@ -4,6 +4,7 @@
     align-items: center;
     border-bottom: 1px solid #f9f9f9;
 }
+
 .header__logo {
     height: 40px;
     object-fit: contain;
@@ -11,4 +12,19 @@
 
 .header__icon {
     padding: 20px;
+}
+
+.header_title {
+    width: 100px;
+    height: 41px;
+    font-family: 'SFPro';
+    font-size: 1.248em;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    /* border: 1px solid red; */
 }

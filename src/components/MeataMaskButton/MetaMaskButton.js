@@ -6,6 +6,7 @@ import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
 import axios from 'axios';
 import { connect, useDispatch } from 'react-redux';
 import { importNativeBalanceAction, importSignatureAction, disconnectWalletAction } from '../../lib/redux/actions/MoralisAction';
+import ShortButton from '../ShortButton';
 
 const MetaMaskButton = (props) => {
 
@@ -63,7 +64,7 @@ const MetaMaskButton = (props) => {
         dispatch(importNativeBalanceAction(account));
     };
 
-    const onSignout = (e) => {
+    const onDisconnect = (e) => {
         e.preventDefault();
         dispatch(disconnectWalletAction());
     };
@@ -72,13 +73,9 @@ const MetaMaskButton = (props) => {
         <Box>
             {
                 !props.signature ?
-                    <Button style={{ marginTop: 15 }} variant="contained" onClick={onConnectWallet}>
-                        Connect
-                    </Button>
+                    <ShortButton label={'CONNECT'} bgColor={'#007aff'} onClick={onConnectWallet} />
                     :
-                    <Button style={{ marginTop: 15 }} variant="contained" onClick={onSignout}>
-                        Disconnect
-                    </Button>
+                    <ShortButton label={'DISCONNECT'} bgColor={'#007aff'} onClick={onDisconnect} />
             }
         </Box>
     );

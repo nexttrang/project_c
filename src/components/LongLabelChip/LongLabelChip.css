@@ -1,0 +1,32 @@
+.icon_frame_long_label_chip {
+    width: 90.9vw;
+    height: 4.3vh;
+    padding: 0 2.8vw 0 2.8vw;
+    background-color: transparent;
+    /* align-items: center; */
+    /* display: flex; */
+    border-radius: 45px;
+    margin: 0.5vh 0 0.5vh 0;
+    border: solid 1px #fff;
+    /* border: 1px solid red; */
+}
+
+.label_inner_long_label_chip {
+    width: 100vw;
+    height: 4vh;
+    opacity: 0.5;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 4vh;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80vw;
+    /* border: 1px solid red; */
+}

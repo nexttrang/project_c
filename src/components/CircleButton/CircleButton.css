@@ -1,9 +1,9 @@
-.icon_inner {
+.icon_inner_circle_button {
   position: relative;
   margin: auto;
 }
 
-.bg_icon {
+.bg_icon_circle_button {
   background-image: url("../../assets/images/icon_m_dark.webp");
   background-position: center;
   align-items: center;

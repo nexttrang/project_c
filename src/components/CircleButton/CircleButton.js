@@ -8,8 +8,8 @@ const CircleButton = (props) => {
     const getSizeIcon = () => type === 'smaller' ? '20px' : '30px';
 
     return (
-        <div className='bg_icon' style={{ width: getSizeBG(), height: getSizeBG() }}>
-            {icon && <img src={icon} className="icon_inner" style={{ width: getSizeIcon(), height: getSizeIcon() }} />}
+        <div className='bg_icon_circle_button' style={{ width: getSizeBG(), height: getSizeBG() }}>
+            {icon && <img src={icon} className="icon_inner_circle_button" style={{ width: getSizeIcon(), height: getSizeIcon() }} />}
         </div >
     );
 };

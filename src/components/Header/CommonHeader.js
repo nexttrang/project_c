@@ -1,31 +1,50 @@
 import React from 'react';
-import './Header.css';
-import PersonIcon from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { Link } from 'react-router-dom';
-import { Box } from '@mui/system';
-import Logo from '../../assets/images/logo.png';
+import { Box, makeStyles } from '@material-ui/core';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import './Header.css';
 
-const CommonHeader = ({ backButton }) => {
+const CommonHeader = (props) => {
+    const { title, backButton } = props;
+
+    const classes = useStyles();
 
     return (
-        <div className="header">
-            {backButton ? (
-                <Link to={backButton} >
-                    <ArrowBackIosIcon fontSize="large" className="header__icon" />
-                </Link>
-            ) : (
-                <IconButton>
-                    <PersonIcon fontSize="large" className="header__icon" />
-                </IconButton>
-            )}
-            <Link to="/home">
-                <img className="header__logo" src={Logo} alt="tinder's logo" />
+        <Box className={classes.header}>
+            <Link to={backButton} >
+                <ArrowBackIosIcon className={classes.icon_left} />
             </Link>
-            <Box />
-        </div>
+            <Box>
+                <span className="header_title">
+                    {title}
+                </span>
+            </Box>
+            <IconButton className={classes.icon_right}>
+            </IconButton>
+        </Box>
     );
 };
 
+const useStyles = makeStyles({
+    header: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: '3vh',
+    },
+    icon_left: {
+        width: '4vw',
+        height: '2vh',
+        marginLeft: '5.5vw',
+        objectFit: 'contain',
+        color: 'white',
+    },
+    icon_right: {
+        width: '7.8vw',
+        height: '4.4vh',
+        marginRight: '5.5vw',
+        objectFit: 'contain',
+    }
+});
 export default CommonHeader;

@@ -1,6 +1,7 @@
 import React from 'react';
-import CircleButton from '../../components/CircleButton/CircleButton';
 import { Grid } from '@material-ui/core';
+import LongLabelChip from '../../components/LongLabelChip';
+import LongButton from '../../components/LongButton/LongButton';
 
 const DebugScreen = (props) => {
 
@@ -11,7 +12,8 @@ const DebugScreen = (props) => {
             alignItems="center"
             justifyContent="center"
             style={{ minHeight: '100vh' }}>
-            <CircleButton />
+            <LongButton label={'Guest User'} />
+            {/* <LongLabelChip label={'Address'} /> */}
         </Grid>
     );
 };

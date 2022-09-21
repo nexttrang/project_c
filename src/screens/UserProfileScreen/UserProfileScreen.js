@@ -58,7 +58,7 @@ const UserProfileScreen = (props) => {
 
     return (
         <>
-            <CommonHeader backButton={'/home'} />
+            <CommonHeader backButton={'/home'} title={'PROFILE'} />
             <WagmiConfig client={client}>
                 <UserProfileContainer {...{ auth: auth }} />
             </WagmiConfig>

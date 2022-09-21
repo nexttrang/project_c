@@ -1,0 +1,14 @@
+.label_inner_short_button {
+    width: 86px;
+    height: 3vh;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 3vh;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    /* border: 1px solid white; */
+}

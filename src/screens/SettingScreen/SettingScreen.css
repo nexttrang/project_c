@@ -1,0 +1,21 @@
+.container {
+    margin: 0 4.5vw 0 4.5vw;
+    object-fit: contain;
+}
+
+.title_menu {
+    width: 74px;
+    height: 24px;
+    opacity: 0.5;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin: 0 0 0.1vh 2.8vw;
+
+}
