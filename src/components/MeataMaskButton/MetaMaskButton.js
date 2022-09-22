@@ -23,8 +23,6 @@ const MetaMaskButton = (props) => {
 
     const queryConnectWalletForMobile = () => {
         setSearchParams({ 'device': 'mobile', 'request': 'connect_wallet' });
-        // const currentURL = window.location.pathname;
-        // navigateSearch(currentURL, { device: 'mobile', request: 'connect_wallet' });
     };
 
     const onConnectWallet = async (e) => {
@@ -33,6 +31,7 @@ const MetaMaskButton = (props) => {
         try {
             if (isMobile) {
                 queryConnectWalletForMobile();
+                return;
             }
 
             if (isConnected) {
