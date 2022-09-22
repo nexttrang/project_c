@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
+import { useSearchParams } from 'react-router-dom';
 
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
@@ -8,8 +9,10 @@ import { connect, useDispatch } from 'react-redux';
 import { importNativeBalanceAction, importSignatureAction, disconnectWalletAction } from '../../lib/redux/actions/MoralisAction';
 import ShortButton from '../ShortButton';
 import checker from '../../lib/helper/checker';
+import { isMobile } from 'react-device-detect';
 
 const MetaMaskButton = (props) => {
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const dispatch = useDispatch();
 
@@ -18,10 +21,20 @@ const MetaMaskButton = (props) => {
     const { isConnected } = useAccount();
     const { signMessageAsync } = useSignMessage();
 
+    const queryConnectWalletForMobile = () => {
+        setSearchParams({ 'device': 'mobile', 'request': 'connect_wallet' });
+        // const currentURL = window.location.pathname;
+        // navigateSearch(currentURL, { device: 'mobile', request: 'connect_wallet' });
+    };
+
     const onConnectWallet = async (e) => {
         e.preventDefault();
 
         try {
+            if (isMobile) {
+                queryConnectWalletForMobile();
+            }
+
             if (isConnected) {
                 await disconnectAsync();
             }
