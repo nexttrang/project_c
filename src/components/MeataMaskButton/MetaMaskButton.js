@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { useSearchParams } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ import { importNativeBalanceAction, importSignatureAction, disconnectWalletActio
 import ShortButton from '../ShortButton';
 import checker from '../../lib/helper/checker';
 import { isMobile } from 'react-device-detect';
+import { ethers } from 'ethers';
 
 const MetaMaskButton = (props) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -21,18 +22,71 @@ const MetaMaskButton = (props) => {
     const { isConnected } = useAccount();
     const { signMessageAsync } = useSignMessage();
 
-    const queryConnectWalletForMobile = () => {
-        setSearchParams({ 'device': 'mobile', 'request': 'connect_wallet' });
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [account, setAccount] = useState(null);
+    const [balance, setBalance] = useState(null);
+
+    // const queryConnectWalletForMobile = () => {
+    //     setSearchParams({ 'device': 'mobile', 'request': 'connect_wallet' });
+    // };
+
+    useEffect(() => {
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', accountsChanged);
+            window.ethereum.on('chainChanged', chainChanged);
+        }
+    }, []);
+
+    const connectHandler = async () => {
+        if (window.ethereum) {
+            try {
+                const res = await window.ethereum.request({
+                    method: 'eth_requestAccounts',
+                });
+                await accountsChanged(res[0]);
+            } catch (err) {
+                console.error(err);
+                setErrorMessage('There was a problem connecting to MetaMask');
+            }
+        } else {
+            setErrorMessage('Install MetaMask');
+            console.log('Install MetaMask');
+        }
+    };
+
+    const accountsChanged = async (newAccount) => {
+        setAccount(newAccount);
+        console.log(`balance: ${JSON.stringify(newAccount)}`);
+
+        try {
+            const balance = await window.ethereum.request({
+                method: 'eth_getBalance',
+                params: [newAccount.toString(), 'latest'],
+            });
+            setBalance(ethers.utils.formatEther(balance));
+            console.log(`balance: ${JSON.stringify(ethers.utils.formatEther(balance))}`);
+        } catch (err) {
+            console.error(err);
+            setErrorMessage('There was a problem connecting to MetaMask');
+            console.log('There was a problem connecting to MetaMask');
+
+        }
+    };
+
+    const chainChanged = () => {
+        setErrorMessage(null);
+        setAccount(null);
+        setBalance(null);
     };
 
     const onConnectWallet = async (e) => {
         e.preventDefault();
 
         try {
-            if (isMobile) {
-                queryConnectWalletForMobile();
-                return;
-            }
+            // if (isMobile) {
+            //     queryConnectWalletForMobile();
+            //     return;
+            // }
 
             if (isConnected) {
                 await disconnectAsync();
@@ -93,7 +147,7 @@ const MetaMaskButton = (props) => {
         <Box>
             {
                 !props.signature ?
-                    <ShortButton label={'CONNECT'} bgColor={'#007aff'} onClick={onConnectWallet} />
+                    <ShortButton label={'CONNECT'} bgColor={'#007aff'} onClick={connectHandler} />
                     :
                     <ShortButton label={'DISCONNECT'} bgColor={'#007aff'} onClick={onDisconnect} />
             }
