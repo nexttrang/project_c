@@ -9,7 +9,7 @@ import { importNativeBalanceAction, importSignatureAction, disconnectWalletActio
 import ShortButton from '../ShortButton';
 import checker from '../../lib/helper/checker';
 import { isMobile } from 'react-device-detect';
-// import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const dappUrl = 'king-prawn-app-jg2si.ondigitalocean.app';
 const metamaskAppDeepLink = 'https://metamask.app.link/dapp/' + dappUrl;
@@ -22,16 +22,15 @@ const MetaMaskButton = (props) => {
     const { disconnectAsync } = useDisconnect();
     const { isConnected } = useAccount();
     const { signMessageAsync } = useSignMessage();
-    // const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const onConnectWallet = async (e) => {
         e.preventDefault();
 
         try {
-            // if (isMobile) {
-            //     setSearchParams({ device: 'mobile', request: 'metamaskconnect' });
-            //     return;
-            // }
+            if (isMobile) {
+                setSearchParams({ device: 'mobile', request: 'metamaskconnect' });
+            }
 
             if (isConnected) {
                 await disconnectAsync();
