@@ -22,7 +22,7 @@ const MetaMaskButton = (props) => {
     const { disconnectAsync } = useDisconnect();
     const { isConnected } = useAccount();
     const { signMessageAsync } = useSignMessage();
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
 
     const onConnectWallet = async (e) => {
         e.preventDefault();
