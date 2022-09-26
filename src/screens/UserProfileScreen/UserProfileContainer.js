@@ -9,10 +9,24 @@ import LongLabelChip from '../../components/LongLabelChip';
 import LongButton from '../../components/LongButton/LongButton';
 import { signInWithGoogle } from '../../lib/services/firebaseService';
 import { Stack } from '@mui/material';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { importNativeBalanceAction } from '../../lib/redux/actions/MoralisAction';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
     const dispatch = useDispatch();
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        const request = searchParams.get('request');
+        console.log(`request: ${request}`);
+        if (request === 'importaddress') {
+            // console.log(`request: ${request}`);
+            const value = searchParams.get('value');
+            console.log(`value: ${value}`);
+            dispatch(importNativeBalanceAction(value));
+        }
+    }, []);
 
     useEffect(() => {
         loadLocalSignature(dispatch);

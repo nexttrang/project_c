@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button } from '@material-ui/core';
 
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
@@ -86,21 +86,6 @@ const MetaMaskButton = (props) => {
         e.preventDefault();
         dispatch(disconnectWalletAction());
     };
-
-    // const showConnectButton = () => {
-    //     console.log(`showConnect: isMobile: ${isMobile}`);
-    //     if (isMobile) {
-    //         return (
-    //             <a href={metamaskAppDeepLink}>
-    //                 <ShortButton label={'CONNECT'} bgColor={'#007aff'} />
-    //             </a >
-    //         );
-    //     }
-
-    //     return (
-    //         <ShortButton label={'CONNECT'} bgColor={'#007aff'} onClick={onConnectWallet} />
-    //     );
-    // };
 
     return (
         <Box>

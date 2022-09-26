@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
+import { Routes, Route, Navigate, HashRouter, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthSelector from './lib/redux/selectors/AuthSelector';
 import { checkAutoLogin } from './lib/services/authService';
@@ -37,7 +37,7 @@ const App = () => {
                     <Route exact path="/login" element={isAuthenticated ? (<Navigate to="/home" />) : (<LoginScreen />)} />
                     <Route exact path="/asset_info/:contactAddress/:tokenId" element={navigate(<AssetInfoScreen {...{ auth: auth }} />)} />
                     <Route exact path="/setting" element={navigate(<SettingScreen {...{ auth: auth }} />)} />
-                    <Route exact path="/user_profile" element={navigate(<UserProfileScreen {...{ auth: auth }} />)} />
+                    <Route exact path="/user_profile" element={<UserProfileScreen {...{ auth: auth }} />} />
                     <Route exact path="/debug" element={<DebugScreen {...{ auth: auth }} />} />
                 </Routes>
             </Suspense>
