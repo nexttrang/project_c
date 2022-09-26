@@ -13,5 +13,5 @@ const isConnectorNotFoundError = (str) => {
 export default {
     isValidEmail,
     isStrongPassword,
-    isConnectorNotFoundError,
+    isConnectorNotFoundError
 };
