@@ -8,6 +8,8 @@ import { connect, useDispatch } from 'react-redux';
 import { importNativeBalanceAction, importSignatureAction, disconnectWalletAction } from '../../lib/redux/actions/MoralisAction';
 import ShortButton from '../ShortButton';
 import checker from '../../lib/helper/checker';
+import { isMobile } from 'react-device-detect';
+import { useSearchParams } from 'react-router-dom';
 
 const dappUrl = 'king-prawn-app-jg2si.ondigitalocean.app';
 const metamaskAppDeepLink = 'https://metamask.app.link/dapp/' + dappUrl;
@@ -20,11 +22,17 @@ const MetaMaskButton = (props) => {
     const { disconnectAsync } = useDisconnect();
     const { isConnected } = useAccount();
     const { signMessageAsync } = useSignMessage();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const onConnectWallet = async (e) => {
         e.preventDefault();
 
         try {
+            if (isMobile) {
+                setSearchParams({ device: 'mobile', request: 'metamaskconnect' });
+                return;
+            }
+
             if (isConnected) {
                 await disconnectAsync();
             }
@@ -79,6 +87,21 @@ const MetaMaskButton = (props) => {
         e.preventDefault();
         dispatch(disconnectWalletAction());
     };
+
+    // const showConnectButton = () => {
+    //     console.log(`showConnect: isMobile: ${isMobile}`);
+    //     if (isMobile) {
+    //         return (
+    //             <a href={metamaskAppDeepLink}>
+    //                 <ShortButton label={'CONNECT'} bgColor={'#007aff'} />
+    //             </a >
+    //         );
+    //     }
+
+    //     return (
+    //         <ShortButton label={'CONNECT'} bgColor={'#007aff'} onClick={onConnectWallet} />
+    //     );
+    // };
 
     return (
         <Box>
