@@ -22,11 +22,20 @@
     letter-spacing: normal;
     text-align: left;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-lines: 1;
+    max-width: 50vw;
+    margin-right: auto;
+    margin-left: 2vw;
     /* border: 1px solid red; */
 }
 
 .icon_right_long_button {
-    width: 3vw;
-    height: 3vw;
+    width: 2vh;
+    height: 2vh;
+    margin-left: auto;
+    margin-right: 2vw;
     /* border: 1px solid red; */
 }

@@ -39,15 +39,14 @@ export function loginAction() {
 export function mappingGoogleAccountAction() {
     return (dispatch) => {
         getMappingAccountResult().then(result => {
+            console.log(`result: ${JSON.stringify(result)}`);
 
             const data = getter.parseMappingGoogleAccountData(result.user);
-
-            console.log(`result: ${JSON.stringify(data)}`);
 
             saveGoogleAccountInLocalStorage(data);
             dispatch(confirmedMappingGoogleAccountAction(data));
         }).catch(error => {
-            console.log(error);
+            console.log(`mapping account error: ${error}`);
         });
     };
 }

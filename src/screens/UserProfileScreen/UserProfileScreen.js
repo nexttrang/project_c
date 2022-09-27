@@ -17,50 +17,25 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 
-// Configure chains & providers with the Alchemy provider.
-// Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
-    publicProvider(),
-]);
+import { ConnectKitProvider, ConnectKitButton, getDefaultClient } from 'connectkit';
 
-// Set up client
-const client = createClient({
-    autoConnect: true,
-    connectors: [
-        new MetaMaskConnector({ chains }),
-        new CoinbaseWalletConnector({
-            chains,
-            options: {
-                appName: 'wagmi',
-            },
-        }),
-        new WalletConnectConnector({
-            chains,
-            options: {
-                qrcode: true,
-            },
-        }),
-        new InjectedConnector({
-            chains,
-            options: {
-                name: 'Injected',
-                shimDisconnect: true,
-            },
-        }),
-    ],
-    provider,
-    webSocketProvider,
-});
+const alchemyId = process.env.REACT_APP_ALCHEMY_ID;
+
+const client = createClient(
+    getDefaultClient({
+        appName: 'Storica App',
+        alchemyId,
+    }),
+);
 
 const UserProfileScreen = (props) => {
-    const { auth } = props;
-
     return (
         <>
             <CommonHeader backButton={'/home'} title={'PROFILE'} />
             <WagmiConfig client={client}>
-                <UserProfileContainer {...{ auth: auth }} />
+                <ConnectKitProvider theme="midnight">
+                    <UserProfileContainer />
+                </ConnectKitProvider>
             </WagmiConfig>
         </>
     );

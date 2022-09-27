@@ -11,6 +11,8 @@ import { signInWithGoogle } from '../../lib/services/firebaseService';
 import { Stack } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { importNativeBalanceAction } from '../../lib/redux/actions/MoralisAction';
+import { mappingGoogleAccountAction } from '../../lib/redux/actions/AuthActions';
+import { ConnectKitButton } from 'connectkit';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
@@ -18,6 +20,9 @@ const UserProfileContainer = (props) => {
     let [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
+        console.log(`auth: ${JSON.stringify(auth)}`);
+        dispatch(mappingGoogleAccountAction());
+
         const request = searchParams.get('request');
         console.log(`request: ${request}`);
         if (request === 'importaddress') {
@@ -44,7 +49,7 @@ const UserProfileContainer = (props) => {
                     E-MAIL:
                 </span>
 
-                <LongButton label={auth.email ? auth.email : `Guest User: ${auth.uid}`} onClick={!auth.email ? onMappingGoogle : (() => { })} editable={!auth.email} />
+                <LongButton label={auth.email ? auth.email : `Guest User : ${auth.uid}`} onClick={!auth.email ? onMappingGoogle : (() => { })} editable={!auth.email} />
             </>
         );
     };
@@ -56,12 +61,12 @@ const UserProfileContainer = (props) => {
                     WALLET:
                 </span>
 
-                <LongLabelChip label={'Address'} value={`${address}`} />
-                <LongLabelChip label={'Balance'} value={`${balance}`} />
-                <LongLabelChip label={'Signature'} value={`${signature}`} />
+                {/* <LongLabelChip label={'Address'} value={`${address}`} />
+                <LongLabelChip label={'Balance'} value={`${balance}`} /> */}
+                {/* <LongLabelChip label={'Signature'} value={`${signature}`} /> */}
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
-                    <MetaMaskButton />
+                    <ConnectKitButton />
                 </div>
             </div>
         );
@@ -86,7 +91,8 @@ const mapStateToProps = (state) => {
     return {
         balance: state.moralis.native_balance.balance,
         address: state.moralis.native_balance.address,
-        signature: state.moralis.signature
+        signature: state.moralis.signature,
+        auth: state.auth.auth
     };
 };
 

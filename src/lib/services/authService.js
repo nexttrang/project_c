@@ -33,7 +33,7 @@ export function runLogOutTimer(dispatch, timer) {
     }, timer);
 }
 
-function loadLocalUserData() {
+export function loadLocalUserData() {
     const tokenDetailsString = localStorage.getItem(keyUserDetails);
     if (!tokenDetailsString) {
         return '';
