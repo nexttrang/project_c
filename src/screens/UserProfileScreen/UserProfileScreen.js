@@ -23,7 +23,13 @@ const UserProfileScreen = (props) => {
         <>
             <CommonHeader backButton={'/home'} title={'PROFILE'} />
             <WagmiConfig client={client}>
-                <ConnectKitProvider theme="midnight">
+                <ConnectKitProvider theme="midnight" customTheme={{
+                    '--ck-connectbutton-background': '#007aff',
+                    '--ck-connectbutton-color': '#fff',
+                    '--ck-connectbutton-border-radius': '20px',
+                    '--ck-font-family': 'SFPro',
+                    '--ck-connectbutton-font-size': '0.874em',
+                }}>
                     <UserProfileContainer />
                 </ConnectKitProvider>
             </WagmiConfig>
