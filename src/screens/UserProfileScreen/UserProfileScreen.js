@@ -5,19 +5,9 @@ import UserProfileContainer from './UserProfileContainer';
 import {
     WagmiConfig,
     createClient,
-    defaultChains,
-    configureChains,
 } from 'wagmi';
 
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
-
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-
-import { ConnectKitProvider, ConnectKitButton, getDefaultClient } from 'connectkit';
+import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 
 const alchemyId = process.env.REACT_APP_ALCHEMY_ID;
 

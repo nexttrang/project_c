@@ -3,9 +3,6 @@ import { Avatar } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import { loadLocalNativeBalance, loadLocalSignature } from '../../lib/services/moralisService';
 import './UserProfile.css';
-
-import MetaMaskButton from '../../components/MeataMaskButton/MetaMaskButton';
-import LongLabelChip from '../../components/LongLabelChip';
 import LongButton from '../../components/LongButton/LongButton';
 import { signInWithGoogle } from '../../lib/services/firebaseService';
 import { Stack } from '@mui/material';
@@ -60,11 +57,6 @@ const UserProfileContainer = (props) => {
                 <span className="title_menu">
                     WALLET:
                 </span>
-
-                {/* <LongLabelChip label={'Address'} value={`${address}`} />
-                <LongLabelChip label={'Balance'} value={`${balance}`} /> */}
-                {/* <LongLabelChip label={'Signature'} value={`${signature}`} /> */}
-
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
                     <ConnectKitButton />
                 </div>
