@@ -6,7 +6,7 @@ const NFTDetailTable = (props) => {
     const { contractAddress, contractId, contractStandard } = props;
 
     return (
-        <Stack spacing={3} style={{ padding: '10px 0 10px 0' }}>
+        <Stack spacing={3} style={{ padding: '10px 0 10px 0', minHeight: '5vh' }}>
             <CoupleLabel label='Contract Address:' value={contractAddress} />
             <CoupleLabel label='Contract ID:' value={contractId} />
             <CoupleLabel label='Contract Standard:' value={contractStandard} type='2' />

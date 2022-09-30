@@ -92,7 +92,7 @@ const AssetInfoContainer = () => {
                         />
                         <AssetInfoCollapse asset={asset} tokenId={tokenId} traits={traits} />
                     </Stack>
-                    <Spacer height='12vh' />
+                    <Spacer height='10vh' />
                     <div style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
                         <CustomLongButton label='BUY' onClick={() => { alert('This feature is under development'); }} />
                     </div>

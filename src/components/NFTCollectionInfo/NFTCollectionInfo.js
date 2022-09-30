@@ -13,7 +13,7 @@ const NFTCollectionInfo = (props) => {
     };
 
     return (
-        <Stack alignItems='end' margin='1vh 0 1vh 0' >
+        <Stack style={{ minHeight: '5vh', margin: '1vh 0 1vh 0', alignItems: 'end' }} >
             <div style={{ width: '85vw' }}>
                 {image && <img src={image} className='nft_col_info_image' />}
                 <span className="nft_col_info_text">

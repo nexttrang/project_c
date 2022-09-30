@@ -13,7 +13,8 @@ const NFTProperties = (props) => {
             spacing={0}
             direction="column"
             alignItems="center"
-            justifyContent="center">
+            justifyContent="center"
+            style={{ minHeight: '5vh' }}>
 
             {chunks.map((chunk, index) => (
                 <RowPropertyCard key={index} data={chunk} />
