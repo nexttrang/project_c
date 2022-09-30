@@ -19,14 +19,13 @@
     display: flow-root;
     background-color: rgba(217, 217, 217, 0.2);
     margin: 0.5vh 0 0.5vh 0;
-    object-fit: cover;
     /* border: 1px solid red; */
 }
 
 .label_inner_styled_long_button {
-    width: 75vw;
+    width: 100vw;
     height: 4vh;
-    max-width: 75vw;
+    max-width: 70vw;
     font-family: SFPro;
     font-size: 0.874em;
     font-weight: bold;
