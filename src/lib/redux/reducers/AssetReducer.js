@@ -6,13 +6,13 @@ const initSate = {
 
 const assetReducer = (state = initSate, action) => {
     switch (action.type) {
-    case ASSETS_IMPORT_ACTION:
-        return {
-            ...state,
-            assets: action.payload,
-        };
-    default:
-        return state;
+        case ASSETS_IMPORT_ACTION:
+            return {
+                ...state,
+                assets: action.payload,
+            };
+        default:
+            return state;
     }
 };
 

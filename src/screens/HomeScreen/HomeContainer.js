@@ -196,12 +196,12 @@ function HomeContainer() {
 
     const showTags = (asset) => {
         switch (asset.swipe) {
-        case 'right':
-            return <Box className={classes.like} component="img" src={Like} />;
-        case 'left':
-            return <Box className={classes.nope} component="img" src={Nope} />;
-        default:
-            return <></>;
+            case 'right':
+                return <Box className={classes.like} component="img" src={Like} />;
+            case 'left':
+                return <Box className={classes.nope} component="img" src={Nope} />;
+            default:
+                return <></>;
         }
     };
 

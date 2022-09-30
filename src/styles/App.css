@@ -6,6 +6,7 @@
 
 html {
     background-image: url("../assets/images/icon_background_dark_@2x.webp");
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
 

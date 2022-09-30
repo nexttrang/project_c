@@ -6,10 +6,10 @@ import AuthSelector from '../../lib/redux/selectors/AuthSelector';
 import CommonHeader from '../../components/Header/CommonHeader';
 import { auth } from '../../lib/services/firebaseService';
 import './SettingScreen.css';
-import LabelArrowLongButton from '../../components/LabelArrowLongButton';
 import iconTerm from '../../assets/images/icon_term.webp';
 import iconPrivacy from '../../assets/images/icon_privacy.webp';
 import ShortButton from '../../components/ShortButton';
+import StyledLongButton from '../../components/StyledLongButton';
 
 const SettingScreen = () => {
     const dispatch = useDispatch();
@@ -29,8 +29,8 @@ const SettingScreen = () => {
                     ABOUT
                 </span>
 
-                <LabelArrowLongButton icon={iconTerm} label={'Term Of Service'} />
-                <LabelArrowLongButton icon={iconPrivacy} label={'Privacy Policy'} />
+                <StyledLongButton icon={iconTerm} label={'Term Of Service'} />
+                <StyledLongButton icon={iconPrivacy} label={'Privacy Policy'} />
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
                     <ShortButton label={'LOGOUT'} onClick={onLogout} />

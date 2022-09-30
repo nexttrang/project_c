@@ -3,13 +3,13 @@ import { Avatar } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import { loadLocalNativeBalance, loadLocalSignature } from '../../lib/services/moralisService';
 import './UserProfile.css';
-import LongButton from '../../components/LongButton/LongButton';
 import { signInWithGoogle } from '../../lib/services/firebaseService';
 import { Stack } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { importNativeBalanceAction } from '../../lib/redux/actions/MoralisAction';
 import { mappingGoogleAccountAction } from '../../lib/redux/actions/AuthActions';
 import { ConnectKitButton } from 'connectkit';
+import StyledLongButton from '../../components/StyledLongButton/StyledLongButton';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
@@ -46,7 +46,7 @@ const UserProfileContainer = (props) => {
                     E-MAIL:
                 </span>
 
-                <LongButton label={auth.email ? auth.email : `Guest User : ${auth.uid}`} onClick={!auth.email ? onMappingGoogle : (() => { })} editable={!auth.email} />
+                <StyledLongButton label={auth.email ? auth.email : `Guest User : ${auth.uid}`} onClick={!auth.email ? onMappingGoogle : (() => { })} type={!auth.email ? 'edit' : ''} />
             </>
         );
     };

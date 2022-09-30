@@ -1,0 +1,57 @@
+.background_collapse_styled_long_button {
+    object-fit: cover;
+    padding: 0 3.5vw 0 2.8vw;
+    background-position: center;
+    align-items: center;
+    display: flex;
+    border-radius: 10px;
+    margin: 0.5vh 0 0.5vh 0;
+    background-color: rgba(217, 217, 217, 0.1);
+    /* border: 1px solid red; */
+}
+
+.background_expand_styled_long_button {
+    object-fit: cover;
+    padding: 0 3.5vw 0 2.8vw;
+    background-position: center;
+    border-radius: 10px;
+    align-items: center;
+    display: flow-root;
+    background-color: rgba(217, 217, 217, 0.2);
+    margin: 0.5vh 0 0.5vh 0;
+    object-fit: cover;
+    /* border: 1px solid red; */
+}
+
+.label_inner_styled_long_button {
+    width: 75vw;
+    height: 4vh;
+    max-width: 75vw;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 4vh;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin-left: 2.2vw;
+    text-transform: none;
+    /* border: 1px solid red; */
+}
+
+.icon_left_styled_long_button {
+    width: 3.2vw;
+    height: 2.5vh;
+    object-fit: contain;
+    /* border: 1px solid red; */
+}
+
+.icon_right_styled_long_button {
+    width: 2vh;
+    height: 2vh;
+    margin-left: auto;
+    margin-right: 2vw;
+    /* border: 1px solid red; */
+}

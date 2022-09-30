@@ -1,0 +1,14 @@
+.label_inner_long_button {
+    object-fit: contain;
+    flex-grow: 0;
+    font-family: SFPro;
+    font-size: 1.248em;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    /* border: 1px solid white; */
+}

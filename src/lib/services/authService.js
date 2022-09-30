@@ -7,18 +7,18 @@ export function formatError(errorResponse) {
     console.log(errorResponse.error.message);
 
     switch (errorResponse.error.message) {
-    case 'EMAIL_EXISTS':
-        return 'Email already exists';
-    case 'EMAIL_NOT_FOUND':
-        return 'Email not found';
-    case 'INVALID_PASSWORD':
-        return 'Invalid password';
-    case 'INVALID_EMAIL':
-        return 'Invalid email';
-    case 'USER_DISABLED':
-        return 'User disabled';
-    default:
-        return errorResponse.error.message;
+        case 'EMAIL_EXISTS':
+            return 'Email already exists';
+        case 'EMAIL_NOT_FOUND':
+            return 'Email not found';
+        case 'INVALID_PASSWORD':
+            return 'Invalid password';
+        case 'INVALID_EMAIL':
+            return 'Invalid email';
+        case 'USER_DISABLED':
+            return 'User disabled';
+        default:
+            return errorResponse.error.message;
     }
 }
 

@@ -1,0 +1,26 @@
+.label_couple_label {
+    object-fit: contain;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.1vh;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    /* border: 1px solid yellow; */
+}
+
+.value_couple_label {
+    object-fit: contain;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.1vh;
+    letter-spacing: normal;
+    text-align: right;
+    /* border: 1px solid red; */
+}
