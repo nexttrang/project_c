@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CustomLongButton from '../../components/CustomLongButton';
 import Spacer from '../../components/Spacer';
+import StyledDiv from '../../components/StyledDiv';
 import getter from '../../lib/helper/getter';
 import { openEtherScan, retrieveAsset, retrieveCollection } from '../../lib/services/openseaService';
 import './AssetInfo.css';
@@ -80,7 +81,7 @@ const AssetInfoContainer = () => {
     }, [collectionInfo]);
 
     return (
-        <div>
+        <StyledDiv>
             {asset &&
                 <Container className='container_asset_info'>
                     <Stack spacing={2}>
@@ -93,13 +94,13 @@ const AssetInfoContainer = () => {
                         <AssetInfoCollapse asset={asset} tokenId={tokenId} traits={traits} />
                     </Stack>
                     <Spacer height='10vh' />
-                    <div style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
+                    <StyledDiv matchParent={false} style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
                         <CustomLongButton label='BUY' onClick={() => { alert('This feature is under development'); }} />
-                    </div>
+                    </StyledDiv>
                 </Container>
             }
 
-        </div>
+        </StyledDiv>
     );
 };
 

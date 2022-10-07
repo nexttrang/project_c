@@ -11,8 +11,17 @@ const invoke = async (action, ms) => {
     action();
 };
 
+const addSwipeAttributeIntoAssets = (data) => {
+    return data.assets.map(_asset => {
+        let asset = _asset;
+        asset['swipe'] = '';
+        return asset;
+    });
+};
+
 export default {
+    addSwipeAttributeIntoAssets,
     refreshPage,
     delay,
-    invoke
+    invoke,
 };

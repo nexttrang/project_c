@@ -1,16 +1,15 @@
-.title_menu {
-    width: 74px;
-    height: 24px;
-    opacity: 0.5;
+.placehodler_searchbar {
+    width: 100%;
+    max-width: 70vw;
     font-family: SFPro;
     font-size: 0.874em;
-    font-weight: 900;
+    font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: normal;
+    line-height: 4vh;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
-    margin: 0 0 0.1vh 2.8vw;
-
+    margin-left: 2.2vw;
+    text-transform: none;
 }

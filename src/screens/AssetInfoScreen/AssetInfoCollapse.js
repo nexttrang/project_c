@@ -36,7 +36,7 @@ const AssetInfoCollapse = (props) => {
 
     const getCollectionInfo = () => {
         return (
-            <NFTCollectionInfo info={asset.collection.description} image={asset.collection.image_url} payout_address={asset.collection.payout_address} />
+            <NFTCollectionInfo info={asset.collection.description} image={asset.collection.image_url} payout_address={asset.asset_contract.payout_address} />
         );
     };
 

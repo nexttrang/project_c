@@ -1,23 +1,53 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
 import './Loader.css';
 
-export default function Loader() {
+export const LOADER_POSITION_TINDER_CARD = 'tinder_card';
+export const LOADER_POSITION_FILL_SCREEN = 'fill';
+
+const Loader = (props) => {
+    const { isLoading, position, subscribe, screen, type = '' } = props;
+
+    useEffect(() => {
+        console.log(`isLoading: ${isLoading} - position: ${position} - subscribe: ${subscribe} - screen:${screen}`);
+    }, [isLoading, position, subscribe, screen]);
+
+    const enableCondition = isLoading && (type === 'suspense' || screen === subscribe);
+
     return (
-        <div>
-            <div className='overlay'></div>
-            <div className='absolute w-1/4 top-50 p-3 text-center left-50 bg-white border border-gray-400'>
-                <div className="lds-roller">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div>Loading</div>
-            </div>
-        </div>
+        <>
+            {enableCondition &&
+                <div className={
+                    position === LOADER_POSITION_TINDER_CARD
+                        ? 'cover_tinder_card_loader'
+                        : 'fill_screen_loader'}>
+                    <div className="lds-spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>}
+        </>
     );
-}
+};
+
+const mapStateToProps = (state) => {
+    return {
+        isLoading: state.app.loading.binding,
+        position: state.app.loading.position,
+        subscribe: state.app.loading.subscribe,
+        screen: state.app.screen
+    };
+};
+
+export default connect(mapStateToProps)(Loader);

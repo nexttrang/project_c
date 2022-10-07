@@ -14,7 +14,6 @@ const initialState = {
     },
     errorMessage: '',
     successMessage: '',
-    showLoading: false
 };
 
 export function authReducer(state = initialState, action) {
@@ -25,7 +24,6 @@ export function authReducer(state = initialState, action) {
                 auth: action.payload,
                 errorMessage: '',
                 successMessage: 'User logined',
-                showLoading: false,
             };
         case MAPPING_GOOGLE_ACCOUNT_CONFRIMED_ACTION:
             return {
@@ -44,7 +42,6 @@ export function authReducer(state = initialState, action) {
                 ...state,
                 errorMessage: action.payload,
                 successMessage: '',
-                showLoading: false,
             };
         case LOADING_TOGGLE_ACTION:
             return {

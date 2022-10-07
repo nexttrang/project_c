@@ -1,7 +1,6 @@
 import getter from '../../helper/getter';
-import { formatError, keyUserDetails, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage } from '../../services/authService';
-import { getMappingAccountResult, loginGuestUser } from '../../services/firebaseService';
-
+import { formatError, keyUserAuth, keyUserData, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage, saveUserDataInLocalStorage } from '../../services/authService';
+import { getMappingAccountResult, loginGuestUser, userFetch, userLikeCard } from '../../services/firebaseService';
 
 export const SIGNUP_CONFIRM_ACTION = '[signup action] confirmed signup';
 export const SIGNUP_FAILED_ACTION = '[signup action] failed signup';
@@ -12,7 +11,8 @@ export const LOGOUT_ACTION = '[logout action] logout action';
 export const MAPPING_GOOGLE_ACCOUNT_CONFRIMED_ACTION = '[mapping action] confirmed mapping google';
 
 export function logoutAction() {
-    localStorage.removeItem(keyUserDetails);
+    localStorage.removeItem(keyUserAuth);
+    localStorage.removeItem(keyUserData);
 
     return {
         type: LOGOUT_ACTION,

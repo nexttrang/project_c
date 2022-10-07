@@ -1,0 +1,48 @@
+.bold_text_likedcardpanel {
+    object-fit: contain;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    margin: 0 10vw 0 10vw;
+}
+
+.normal_text_likedcardpanel {
+    object-fit: contain;
+    opacity: 0.5;
+    font-family: SFPro;
+    font-size: 0.874em;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    display: block;
+    margin: 0 10vw 0 10vw;
+}
+
+.box_likedcard {
+    width: 40vw;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    box-shadow: 3px 4px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.container_likedcardcontainer {
+    position: relative;
+    height: 70%;
+    display: 'flex';
+    justify-content: 'center';
+    margin-top: 2vh;
+    overflow-y: auto;
+    /* border: 1px solid red; */
+}

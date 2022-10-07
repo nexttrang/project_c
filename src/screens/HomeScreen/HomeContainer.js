@@ -5,25 +5,25 @@ import SwipeButtons from '../../components/SwipeButton/SwipeButtons';
 import Like from '../../assets/images/ic_tag_like.webp';
 import Nope from '../../assets/images/ic_tag_nope.webp';
 import { Stack } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { importAssets } from '../../lib/redux/actions/AssetActions';
+import { connect, useDispatch } from 'react-redux';
+import { importAssetsAction, loadAssestsAction } from '../../lib/redux/actions/AssetActions';
 import { useNavigate } from 'react-router-dom';
 import { navigateToAssetInfo } from '../../lib/helper/navigator';
-import { fetchAssests } from '../../lib/services/openseaService';
 import './Home.css';
 import util from '../../lib/helper/util';
+import { fetchTopNfts } from '../../lib/services/firebaseService';
+import { fetchUserDataAction, userLikeCardAction } from '../../lib/redux/actions/UserAction';
+import { toggleLoadingAction } from '../../lib/redux/actions/AppStateAction';
+import { LOADER_POSITION_TINDER_CARD } from '../../components/Loader/Loader';
+import getter from '../../lib/helper/getter';
+import { keyAssets, keyNextAssets, keyPrevAssets } from '../../lib/services/assetService';
 
-function HomeContainer() {
+function HomeContainer(props) {
+    const { query, assets, nextAssets, prevAssests, afterCursor, beforeCursor } = props;
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [assets, setAssests] = useState([]);
-    const [nextAssets, setNextAssests] = useState([]);
-    const [prevAssests, setPrevAssests] = useState([]);
-
-    const [afterNextCursor, setAfterNextCursor] = useState('');
-    const [afterPrevCursor, setAfterPrevCursor] = useState('');
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [canSwipe, setCanSwipe] = useState(false);
@@ -40,43 +40,12 @@ function HomeContainer() {
         [assets]
     );
 
-    const loadAssests = useCallback((cursor, useCase = 'current') => {
-        fetchAssests(cursor).then(response => {
-            const data = response.data;
-            // console.log(data);
+    const loadAssests = useCallback((cursor, useCase = keyAssets) => {
+        dispatch(loadAssestsAction(cursor, useCase));
+    }, []);
 
-            if (useCase === 'current') {
-                setAssests(data.assets.map(_asset => {
-                    let asset = _asset;
-                    asset['swipe'] = '';
-                    return asset;
-                }).filter(item => { return item.image_url; }));
-
-                loadAssests(data.next, 'next');
-                loadAssests(data.prev, 'prev');
-            }
-            else if (useCase === 'next') {
-                setNextAssests(data.assets.map(_asset => {
-                    let asset = _asset;
-                    asset['swipe'] = '';
-                    return asset;
-                }).filter(item => { return item.image_url; }));
-
-                setAfterNextCursor(data.next);
-            }
-            else if (useCase === 'prev') {
-                setPrevAssests(data.assets.map(_asset => {
-                    let asset = _asset;
-                    asset['swipe'] = '';
-                    return asset;
-                }).filter(item => { return item.image_url; }));
-
-                setAfterPrevCursor(data.prev);
-            }
-
-        }).catch(error => {
-            console.log(error);
-        });
+    const fetchUserData = useCallback(() => {
+        dispatch(fetchUserDataAction());
     }, []);
 
     // set last direction and decrease current index
@@ -89,8 +58,9 @@ function HomeContainer() {
         setShowTag('');
     };
 
-    const outOfFrame = (name, idx) => {
-        console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+    const outOfFrame = (asset, idx) => {
+        console.log(`${asset.asset_contract.address} (${idx}) left the screen!`, currentIndexRef.current);
+        dispatch(userLikeCardAction(getter.encodeLikedCard(asset.platform, asset.asset_contract.address, asset.token_id)));
     };
 
     const swipeLeft = async () => {
@@ -148,30 +118,35 @@ function HomeContainer() {
     };
 
     const shiftToNextAssests = () => {
-        setPrevAssests([...assets]);
-        setAssests([...nextAssets]);
-        setNextAssests([]);
-        loadAssests(afterNextCursor, 'next');
+        dispatch(importAssetsAction([...assets], keyPrevAssets));
+        dispatch(importAssetsAction([...nextAssets], keyAssets));
+        dispatch(importAssetsAction([], keyNextAssets));
+        dispatch(loadAssestsAction(afterCursor, keyNextAssets));
     };
 
     const shiftToPrevAssests = () => {
-        setNextAssests([...assets]);
-        setAssests([...prevAssests]);
-        setPrevAssests([]);
-        loadAssests(afterPrevCursor, 'prev');
+        dispatch(importAssetsAction([...assets], keyNextAssets));
+        dispatch(importAssetsAction([...prevAssests], keyAssets));
+        dispatch(importAssetsAction([], keyPrevAssets));
+        dispatch(loadAssestsAction(beforeCursor, keyPrevAssets));
     };
 
     useEffect(() => {
         loadAssests('');
     }, [loadAssests]);
 
+    useEffect(() => {
+        fetchUserData();
+    }, [fetchUserData]);
 
     useEffect(() => {
         updateCurrentIndex(assets.length - 1);
 
         dispatch(
-            importAssets(assets)
+            importAssetsAction(assets, keyAssets)
         );
+
+        dispatch(toggleLoadingAction({ binding: !assets.length, position: LOADER_POSITION_TINDER_CARD, subscribe: 'Home' }));
     }, [assets]);
 
     useEffect(() => {
@@ -184,6 +159,10 @@ function HomeContainer() {
             shiftToPrevAssests();
         }
     }, [currentIndex]);
+
+    useEffect(() => {
+        console.log(`query: ${query}`);
+    }, [query]);
 
     const showCardInfo = (asset) => {
         return (
@@ -216,7 +195,7 @@ function HomeContainer() {
                                 className={classes.swipe}
                                 preventSwipe={['up', 'down']}
                                 onSwipe={(dir) => swiped(dir, asset.name, index)}
-                                onCardLeftScreen={() => outOfFrame(asset.name, index)}
+                                onCardLeftScreen={() => outOfFrame(asset, index)}
                                 swipeRequirementType="position"
                                 swipeThreshold="100"
                                 onSwipeRequirementFulfilled={(direction) =>
@@ -304,4 +283,15 @@ const useStyles = makeStyles({
     }
 });
 
-export default HomeContainer;
+const mapStateToProps = (state) => {
+    return {
+        query: state.search.nft_query,
+        assets: state.asset.assets,
+        nextAssets: state.asset.next_assets,
+        prevAssests: state.asset.prev_assets,
+        afterCursor: state.asset.cursor.after,
+        beforeCursor: state.asset.cursor.before
+    };
+};
+
+export default connect(mapStateToProps)(HomeContainer);

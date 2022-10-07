@@ -1,17 +1,15 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
-import LongLabelChip from '../../components/LongLabelChip';
-import iconDescription from '../../assets/images/icon_description.webp';
-import iconProperties from '../../assets/images/icon_properties.webp';
-import iconCollectionInfo from '../../assets/images/icon_collectioninfo.webp';
-import iconDetail from '../../assets/images/icon_detail.webp';
-import StyledLongButton from '../../components/StyledLongButton';
+import { Grid, IconButton } from '@material-ui/core';
 import NFTDetailTable from '../../components/NFTDetailTable/NFTDesTable';
 import NFTDes from '../../components/NFTDes';
 import NFTCollectionInfo from '../../components/NFTCollectionInfo/NFTCollectionInfo';
-import RowPropertyCard from '../../components/RowPropertyCard';
-import getter from '../../lib/helper/getter';
-import CustomLongButton from '../../components/CustomLongButton';
+import SearchBar from '../../components/SearchBar';
+import Loader from '../../components/Loader/Loader';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import LikedCardPanel from '../../components/LikedCardPanel';
+import LikedCard from '../../components/LikedCardPanel/LikedCard';
+import LikedCardRow from '../../components/LikedCardPanel/LikedCardRow';
+import LikedCardContainer from '../../components/LikedCardPanel/LikedCardContainer';
 
 const DebugScreen = (props) => {
 
@@ -33,70 +31,34 @@ const DebugScreen = (props) => {
         );
     };
 
-    const chunks = getter.chunksOfArray(sampleProperties.data, 3);
-
     return (
-        <Grid container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            style={{ border: '1px solid red', minHeight: '100vh' }}>
-
-            <CustomLongButton label='BUY' onClick={() => { alert('This feature is under development'); }} />
-
-            {/* <LongLabelChip label={'Address'} /> */}
-            {/* <StyledLongButton icon={iconDescription} label={'Collection Information'} type={'expand'} expandContent={getCollectionInfo()} /> */}
-            {/* <LabelArrowLongButton icon={iconProperties} label={'Properties'} type={'expand'} />
-        <LabelArrowLongButton icon={iconCollectionInfo} label={'Collection Information'} type={'expand'} />
-        <LabelArrowLongButton icon={iconDetail} label={'Detail'} type={'expand'} /> */}
-
-            {/* <PropertyCard title='Armour' trait='Rusted Steel' percent={8} />
-        <PropertyCard title='Armour' trait='Rusted Steel' percent={8} />
-        <PropertyCard title='Armour' trait='Rusted Steel' percent={8} /> */}
-
-            {/* {chunks.map((chunk, index) => (
-                <RowPropertyCard key={index} data={chunk} />
-            )
-            )} */}
-
-        </Grid>
+        <LikedCardRow data={sampleData.data} />
+        // <LikedCardContainer />
     );
 };
 
-const sampleProperties = {
+export default DebugScreen;
+
+const sampleData = {
     data: [
         {
-            title: 'Armour',
-            trait: 'Rusted Steel',
-            percent: 8
-        },
-        {
-            title: 'Background',
-            trait: 'Tan',
-            percent: 8
-        },
-        {
-            title: 'Class',
-            trait: 'Mighty',
-            percent: 8
-        },
-        {
-            title: 'Eyes',
-            trait: 'Blue Eyes',
-            percent: 8
-        },
-        {
-            title: 'Front Item',
-            trait: 'No Item',
-            percent: 8
-        },
-        {
-            title: 'Headwear',
-            trait: 'Leather Cap',
-            percent: 8
+            address: '0x2963ba471e265e5f51cafafca78310fe87f8e6d1',
+            tokenId: ''
+        }, {
+            address: '0x2642d04b4efb7d52d85c5b1711fc6b10f3bc4d1c',
+            tokenId: ''
         }
     ]
 };
 
-export default DebugScreen;
+{/* <Grid container
+spacing={0}
+direction="column"
+alignItems="center"
+justifyContent="center"
+style={{ border: '1px solid red', minHeight: '100vh' }}>
+
+<IconButton>
+    <AddCircleIcon style={{ width: '10vw', height: '10vw', color: '#fff' }} />
+</IconButton>
+</Grid> */}

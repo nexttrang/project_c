@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, getRedirectResult, GoogleAuthProvider, signInAnonymously, signInWithRedirect } from 'firebase/auth';
-import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore/lite';
+import baseXRest from './baseXRest';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -27,6 +28,11 @@ export const getMyDocs = (_col) => {
     return getDocs(col);
 };
 
+export const getMyDoc = (_col, _doc) => {
+    const ref = doc(db, _col, _doc);
+    return getDoc(ref);
+};
+
 export const setUserDoc = (uid, jsData) => {
 
     const ref = doc(db, 'users', uid);
@@ -50,5 +56,20 @@ export const signInWithGoogle = () => {
 export const getMappingAccountResult = () => {
     return getRedirectResult(auth);
 };
+
+export const setSpecificDoc = (_col, _doc, jsData) => {
+    const ref = doc(db, _col, _doc);
+    return setDoc(ref, {
+        ...jsData,
+        timestamp: serverTimestamp()
+    }, { merge: true });
+};
+
+const limitPerPage = 20;
+export const fetchTopNfts = (cursor) => baseXRest.request(`nfts/fetch_top_nfts?limit=${limitPerPage}&cursor=${cursor}`, 'GET');
+
+export const userLikeCard = (assetAddress) => baseXRest.request('user/like_card', 'POST', { asset_address: assetAddress });
+
+export const userFetch = () => baseXRest.request('user/fetch', 'POST');
 
 export default firebaseApp;

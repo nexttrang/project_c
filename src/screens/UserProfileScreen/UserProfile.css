@@ -1,8 +1,3 @@
-.container {
-    margin: 0 4.5vw 0 4.5vw;
-    object-fit: contain;
-}
-
 .title_menu {
     width: 74px;
     height: 24px;
@@ -17,4 +12,11 @@
     text-align: left;
     color: #fff;
     margin: 0 0 0.1vh 2.8vw;
+}
+
+.container_user_profile_container {
+    margin: 0 4.5vw 0 4.5vw;
+    object-fit: contain;
+    height: 100%;
+    /* border: 1px solid yellow; */
 }

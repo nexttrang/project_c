@@ -20,7 +20,7 @@ const NFTCollectionInfo = (props) => {
                     {info}
                 </span>
             </div>
-            <img src={ic_etherscan} className='nft_col_info_ic_ether_scan' onClick={onOpenEtherScan} />
+            {payout_address && <img src={ic_etherscan} className='nft_col_info_ic_ether_scan' onClick={onOpenEtherScan} />}
         </Stack >
     );
 };

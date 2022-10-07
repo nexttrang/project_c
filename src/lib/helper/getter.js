@@ -59,10 +59,30 @@ const chunksOfArray = (array, chunkSize) => {
     return chunks;
 };
 
+const encodeLikedCard = (platform, address, tokenId) => {
+    return `${platform}_${address}_${tokenId}`;
+};
+
+const decodeLikedCard = (encoded) => {
+    const parts = encoded.split('_');
+
+    if (parts < 3) {
+        return null;
+    }
+
+    return {
+        platform: parts[0],
+        address: parts[1],
+        token_id: parts[2],
+    };
+};
+
 export default {
     getBlockchainInfo,
     parseGuestUserData,
     parseMappingGoogleAccountData,
     shortText,
-    chunksOfArray
+    chunksOfArray,
+    encodeLikedCard,
+    decodeLikedCard
 };

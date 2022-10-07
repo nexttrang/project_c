@@ -1,6 +1,7 @@
 import { confirmedLoginAction, logoutAction } from '../redux/actions/AuthActions';
 
-export const keyUserDetails = 'user_details';
+export const keyUserAuth = 'user_auth';
+export const keyUserData = 'user_data';
 
 export function formatError(errorResponse) {
 
@@ -24,7 +25,11 @@ export function formatError(errorResponse) {
 
 export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(new Date().getTime() + tokenDetails.expiresIn * 1000);
-    localStorage.setItem(keyUserDetails, JSON.stringify(tokenDetails));
+    localStorage.setItem(keyUserAuth, JSON.stringify(tokenDetails));
+}
+
+export function saveUserDataInLocalStorage(data) {
+    localStorage.setItem(keyUserData, JSON.stringify(data));
 }
 
 export function runLogOutTimer(dispatch, timer) {
@@ -33,8 +38,8 @@ export function runLogOutTimer(dispatch, timer) {
     }, timer);
 }
 
-export function loadLocalUserData() {
-    const tokenDetailsString = localStorage.getItem(keyUserDetails);
+export function loadLocalUserAuth() {
+    const tokenDetailsString = localStorage.getItem(keyUserAuth);
     if (!tokenDetailsString) {
         return '';
     }
@@ -42,8 +47,17 @@ export function loadLocalUserData() {
     return JSON.parse(tokenDetailsString);
 }
 
+export function loadLocalUserData() {
+    const userData = localStorage.getItem(keyUserData);
+    if (!userData) {
+        return {};
+    }
+
+    return JSON.parse(userData);
+}
+
 export function checkAutoLogin(dispatch) {
-    let localData = loadLocalUserData();
+    let localData = loadLocalUserAuth();
     if (!localData) {
         dispatch(logoutAction());
         return;
@@ -63,10 +77,14 @@ export function checkAutoLogin(dispatch) {
 }
 
 export function saveGoogleAccountInLocalStorage(data) {
-    const localData = loadLocalUserData();
+    const localData = loadLocalUserAuth();
     if (!localData) {
         return;
     }
 
-    localStorage.setItem(keyUserDetails, JSON.stringify({ ...localData, ...data }));
+    localStorage.setItem(keyUserAuth, JSON.stringify({ ...localData, ...data }));
 }
+
+export const getAccessToken = () => {
+    return loadLocalUserAuth().accessToken;
+};

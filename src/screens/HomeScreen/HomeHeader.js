@@ -1,12 +1,11 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import { Link } from 'react-router-dom';
-import { Box, makeStyles } from '@material-ui/core';
-import iconLogo from '../../assets/images/icon_logo.webp';
-import iconLogoText from '../../assets/images/icon_logo_text.webp';
+import { Box, Link, makeStyles } from '@material-ui/core';
 import iconMenu from '../../assets/images/icon_menu.webp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Stack } from '@mui/material';
+import iconLogo from '../../assets/images/icon_logo.webp';
+import iconLogoText from '../../assets/images/icon_logo_text.webp';
 
 const HomeHeader = () => {
     const classes = useStyles();
@@ -61,4 +60,5 @@ const useStyles = makeStyles({
         objectFit: 'contain',
     }
 });
+
 export default HomeHeader;

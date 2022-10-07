@@ -10,6 +10,9 @@ import iconTerm from '../../assets/images/icon_term.webp';
 import iconPrivacy from '../../assets/images/icon_privacy.webp';
 import ShortButton from '../../components/ShortButton';
 import StyledLongButton from '../../components/StyledLongButton';
+import StyledDiv from '../../components/StyledDiv';
+import { subscribeScreenAction } from '../../lib/redux/actions/AppStateAction';
+import { ScreenName } from '../../App';
 
 const SettingScreen = () => {
     const dispatch = useDispatch();
@@ -21,10 +24,14 @@ const SettingScreen = () => {
         dispatch(disconnectWalletAction());
     };
 
+    React.useEffect(()=>{
+        dispatch(subscribeScreenAction(ScreenName.Setting));
+    },[]);
+
     return (
         <>
             <CommonHeader backButton={'/home'} title={'MENU'} />
-            <div className='container'>
+            <StyledDiv matchParent={false} style={{ margin: '0 4.5vw 0 4.5vw' }}>
                 <span className="title_menu">
                     ABOUT
                 </span>
@@ -32,10 +39,10 @@ const SettingScreen = () => {
                 <StyledLongButton icon={iconTerm} label={'Term Of Service'} />
                 <StyledLongButton icon={iconPrivacy} label={'Privacy Policy'} />
 
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
+                <StyledDiv matchParent={false} style={{ display: 'flex', justifyContent: 'center', marginTop: '1.6vh' }}>
                     <ShortButton label={'LOGOUT'} onClick={onLogout} />
-                </div>
-            </div>
+                </StyledDiv>
+            </StyledDiv>
 
         </>
     );
