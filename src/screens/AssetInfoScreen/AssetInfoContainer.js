@@ -17,6 +17,7 @@ const AssetInfoContainer = () => {
     const [traits, setTraits] = useState([]);
     const [slug, setSlug] = useState('');
     const [collectionInfo, setCollectionInfo] = useState();
+    const [payoutAddress, setPayoutAddress] = useState('');
 
 
     const getCalculatedTraits = () => {
@@ -38,6 +39,11 @@ const AssetInfoContainer = () => {
 
             return { ...trait, percentage: percentage };
         });
+    };
+
+    const onOpenEtherScan = (e) => {
+        e.preventDefault();
+        openEtherScan(payoutAddress);
     };
 
     const loadAssetInfo = useCallback(() => {
@@ -69,6 +75,7 @@ const AssetInfoContainer = () => {
 
         setTraits(asset.traits);
         setSlug(asset.collection.slug);
+        setPayoutAddress(asset.asset_contract.payout_address);
     }, [asset]);
 
     useEffect(() => {
@@ -95,7 +102,7 @@ const AssetInfoContainer = () => {
                     </Stack>
                     <Spacer height='10vh' />
                     <StyledDiv matchParent={false} style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
-                        <CustomLongButton label='BUY' onClick={() => { alert('This feature is under development'); }} />
+                        <CustomLongButton label='BUY' onClick={onOpenEtherScan} />
                     </StyledDiv>
                 </Container>
             }
