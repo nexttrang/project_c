@@ -1,15 +1,16 @@
 import { LOADER_POSITION_FILL_SCREEN } from '../../../components/Loader/Loader';
-import { SUBSCRIBE_SCREEN_ACTION, TOGGLE_LOADING_ACTION, UNSUBSCRIBE_SCREEN_ACTION } from '../actions/AppStateAction';
+import { CLOSE_WEB_POPUP_ACTION, OPEN_WEB_POPUP_ACTION, SUBSCRIBE_SCREEN_ACTION, TOGGLE_LOADING_ACTION, UNSUBSCRIBE_SCREEN_ACTION } from '../actions/AppStateAction';
 
 const defaultLoading = {
     binding: false,
     position: LOADER_POSITION_FILL_SCREEN,
-    subscribe: ''
+    subscribe: '',
 };
 
 const initialState = {
     screen: '',
-    loading: defaultLoading
+    loading: defaultLoading,
+    web_popup: '',
 };
 
 export function appStateReducer(state = initialState, action) {
@@ -30,6 +31,16 @@ export function appStateReducer(state = initialState, action) {
                 ...state,
                 screen: '',
                 loading: defaultLoading
+            };
+        case OPEN_WEB_POPUP_ACTION:
+            return {
+                ...state,
+                web_popup: action.payload,
+            };
+        case CLOSE_WEB_POPUP_ACTION:
+            return {
+                ...state,
+                web_popup: '',
             };
         default:
             return state;

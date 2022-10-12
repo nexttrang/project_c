@@ -11,12 +11,14 @@ import CrawlingScreen from './screens/CrawlingScreen/CrawlingScreen';
 import { style } from '@mui/system';
 import Loader from './components/Loader/Loader';
 import { unsubscribeScreenAction } from './lib/redux/actions/AppStateAction';
+import LinkWrapper from './components/LinkWrapper/LinkWrapper';
 
 const StartScreen = lazy(() => import('./screens/StartScreen'));
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
 const AssetInfoScreen = lazy(() => import('./screens/AssetInfoScreen'));
 const SettingScreen = lazy(() => import('./screens/SettingScreen'));
 const UserProfileScreen = lazy(() => import('./screens/UserProfileScreen'));
+const CollectionInfoScreen = lazy(() => import('./screens/CollectionInfoScreen'));
 
 const darkTheme = createTheme({
     palette: {
@@ -31,6 +33,7 @@ export const ScreenName = {
     Start: 'Start',
     Home: 'Home',
     AssetInfo: 'AssetInfo',
+    CollectionInfo: 'CollectionInfo',
     Setting: 'Setting',
     UserProfile: 'UserProfile'
 };
@@ -40,10 +43,13 @@ const nameToScreen = {
     Home: <HomeScreen />,
     AssetInfo: <AssetInfoScreen />,
     Setting: <SettingScreen />,
-    UserProfile: <UserProfileScreen />
+    UserProfile: <UserProfileScreen />,
+    CollectionInfo: <CollectionInfoScreen />
 };
 
 const App = (props) => {
+    const { link } = props;
+
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(AuthSelector.isAuthenticated);
 
@@ -58,14 +64,18 @@ const App = (props) => {
         dispatch(mappingGoogleAccountAction());
     }, []);
 
+    const externalLink = 'https://magiceden.io/marketplace/degods';
+
     return (
         <ThemeProvider theme={darkTheme}>
+            <LinkWrapper />
             <HashRouter>
                 <Suspense fallback={<Loader type='suspense' />}>
                     <Routes>
                         <Route exact path="/" element={isAuthenticated ? (<Navigate to="/home" />) : (<Navigate to="/start" />)} />
                         <Route path="/home" element={navigate(ScreenName.Home)} />
                         <Route exact path="/start" element={isAuthenticated ? (<Navigate to="/home" />) : (<StartScreen />)} />
+                        <Route exact path="/collection_info/:id" element={navigate(ScreenName.CollectionInfo)} />
                         <Route exact path="/asset_info/:contactAddress/:tokenId" element={navigate(ScreenName.AssetInfo)} />
                         <Route exact path="/setting" element={navigate(ScreenName.Setting)} />
                         <Route exact path="/user_profile" element={navigate(ScreenName.UserProfile)} />
@@ -79,4 +89,10 @@ const App = (props) => {
     );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        link: state.asset.web_popup,
+    };
+};
+
+export default connect(mapStateToProps)(App);

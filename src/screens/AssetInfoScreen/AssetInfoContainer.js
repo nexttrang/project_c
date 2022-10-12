@@ -2,7 +2,7 @@ import { Box, Button, ButtonBase, Container, Grid, Paper, Typography } from '@ma
 import { makeStyles, styled } from '@material-ui/styles';
 import { Stack } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import CustomLongButton from '../../components/CustomLongButton';
 import Spacer from '../../components/Spacer';
 import StyledDiv from '../../components/StyledDiv';
@@ -18,6 +18,7 @@ const AssetInfoContainer = () => {
     const [slug, setSlug] = useState('');
     const [collectionInfo, setCollectionInfo] = useState();
     const [payoutAddress, setPayoutAddress] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
 
 
     const getCalculatedTraits = () => {
@@ -41,9 +42,10 @@ const AssetInfoContainer = () => {
         });
     };
 
-    const onOpenEtherScan = (e) => {
+    const onClickVisit = (e) => {
         e.preventDefault();
-        openEtherScan(payoutAddress);
+        // openEtherScan(payoutAddress);
+        setSearchParams({ request: 'webpopup', host: 'opensea', endpoint: `${asset.asset_contract.address}/${asset.token_id}` });
     };
 
     const loadAssetInfo = useCallback(() => {
@@ -57,7 +59,7 @@ const AssetInfoContainer = () => {
 
     const loadCollectionInfo = useCallback(() => {
         if (!slug) return;
-
+        console.log(`slug: ${slug}`);
         retrieveCollection(slug).then(response => {
             setCollectionInfo(response.data.collection);
             // console.log(`loadCollectionInfo: ${JSON.stringify(response)}`);
@@ -102,7 +104,7 @@ const AssetInfoContainer = () => {
                     </Stack>
                     <Spacer height='10vh' />
                     <StyledDiv matchParent={false} style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
-                        <CustomLongButton label='BUY' onClick={onOpenEtherScan} />
+                        <CustomLongButton label='VISIT' onClick={onClickVisit} />
                     </StyledDiv>
                 </Container>
             }

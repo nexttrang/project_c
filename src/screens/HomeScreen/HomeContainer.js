@@ -8,7 +8,7 @@ import { Stack } from '@mui/material';
 import { connect, useDispatch } from 'react-redux';
 import { importAssetsAction, loadAssestsAction } from '../../lib/redux/actions/AssetActions';
 import { useNavigate } from 'react-router-dom';
-import { navigateToAssetInfo } from '../../lib/helper/navigator';
+import { navigateToAssetInfo, navigateToCollectionInfo } from '../../lib/helper/navigator';
 import './Home.css';
 import util from '../../lib/helper/util';
 import { fetchTopNfts } from '../../lib/services/firebaseService';
@@ -109,7 +109,13 @@ function HomeContainer(props) {
     };
 
     const navigateAssetInfo = () => {
-        navigateToAssetInfo(navigate, assets[currentIndex].asset_contract.address, assets[currentIndex].token_id);
+        const asset = assets[currentIndex];
+        if (asset.platform === 'magiceden') {
+            navigateToCollectionInfo(navigate, asset.id);
+        } else {
+            navigateToAssetInfo(navigate, asset.asset_contract.address, asset.token_id);
+        }
+
     };
 
     const updateCurrentIndex = (val) => {
@@ -167,7 +173,7 @@ function HomeContainer(props) {
     const showCardInfo = (asset) => {
         return (
             <Stack spacing={2} className={classes.cardInfoContainer}>
-                <span className='card_name'>{asset.name}</span>
+                <span className='card_name'>{`${asset.platform}-${asset.name}`}</span>
                 <span className='card_description'>{asset.description}</span>
             </Stack>
         );

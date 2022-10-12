@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import { fetchAssests } from '../../lib/services/openseaService';
 import { getMyDoc, getMyDocs, setSpecificDoc } from '../../lib/services/firebaseService';
+import { fetchCollections } from '../../lib/services/magicedenService';
 
 const CrawlingScreen = () => {
     const [openseaRunning, setOpenseaRunning] = useState(false);
+    const [magicedenRunning, setMagicedenRunning] = useState(false);
 
-    const crawlAssests = (cursor) => {
+    const crawlOpensea = (cursor) => {
         fetchAssests(cursor).then(async (response) => {
             const data = response.data;
             const nextCursor = data.next;
@@ -19,7 +21,7 @@ const CrawlingScreen = () => {
             console.log(`next: ${nextCursor}`);
 
             if (validAssets.length <= 0) {
-                setTimeout(crawlAssests(nextCursor), 1000);
+                setTimeout(crawlOpensea(nextCursor), 1000);
                 return;
             }
 
@@ -33,9 +35,6 @@ const CrawlingScreen = () => {
                 } else {
                     const openseaDocs = await getMyDocs('opensea');
                     index = openseaDocs.docs.length;
-                    // if (!openseaDocs.empty) {
-
-                    // }
                 }
 
                 const importData = {
@@ -55,18 +54,76 @@ const CrawlingScreen = () => {
                 // await setSpecificDoc('opensea', 'meta', { count: index });
 
                 if (i >= validAssets.length - 1) {
-                    setTimeout(crawlAssests(nextCursor), 1000);
+                    setTimeout(crawlOpensea(nextCursor), 1000);
                 }
             }
         }).catch(error => {
             console.log(error);
-            setTimeout(crawlAssests(''), 10000);
+            setTimeout(crawlOpensea(''), 10000);
         });
     };
 
-    const onClickOpenSea = () => {
+    const limitCollections = 200;
+
+    const crawlMagicEden = (cursor) => {
+        fetchCollections(cursor).then(async (response) => {
+            const data = response.data;
+            const nextCursor = cursor + limitCollections;
+
+            const validCollections = data.filter(collection => { return collection.name && collection.description && collection.image; });
+
+            console.log(`magic: ${JSON.stringify(validCollections)}`);
+
+            if (validCollections.length <= 0) {
+                setTimeout(crawlMagicEden(nextCursor), 1000);
+                return;
+            }
+
+            for (let i = 0; i < validCollections.length; i++) {
+                const collection = validCollections[i];
+                let index = 0;
+
+                const docOfCollection = await getMyDoc('magiceden', collection.symbol);
+                if (docOfCollection.exists()) {
+                    index = docOfCollection.data().index;
+                } else {
+                    const magicEdenDocs = await getMyDocs('magiceden');
+                    index = magicEdenDocs.docs.length;
+                }
+
+                const importData = {
+                    id: collection.symbol,
+                    index: index,
+                    platform: 'magiceden',
+                    name: collection.name,
+                    description: collection.description,
+                    image_url: collection.image,
+                };
+
+                await setSpecificDoc('magiceden', collection.symbol, importData);
+                // await setSpecificDoc('opensea', 'meta', { count: index });
+
+                if (i >= validCollections.length - 1) {
+                    setTimeout(crawlMagicEden(nextCursor), 1000);
+                }
+            }
+        }).catch(error => {
+            console.log(error);
+            setTimeout(crawlMagicEden(0), 1000);
+        });
+    };
+
+
+    const onClickOpenSea = (e) => {
+        e.preventDefault();
         setOpenseaRunning(!openseaRunning);
-        crawlAssests('');
+        crawlOpensea('');
+    };
+
+    const onClickMagicEden = (e) => {
+        e.preventDefault();
+        setMagicedenRunning(!magicedenRunning);
+        crawlMagicEden(0);
     };
 
     return (
@@ -74,10 +131,12 @@ const CrawlingScreen = () => {
             spacing={0}
             direction="column"
             alignItems="center"
-            justifyContent="center"
-            style={{ border: '1px solid red', minHeight: '100vh' }}>
+            justifyContent="space-around"
+            style={{ minHeight: '100vh' }}>
 
-            <Button style={{ backgroundColor: '#fff' }} onClick={onClickOpenSea}>{openseaRunning ? 'Crawling' : 'OpenSea'}</Button>
+            <Button style={{ backgroundColor: '#fff', border: '1px solid red' }} onClick={onClickOpenSea}>{openseaRunning ? 'Crawling' : 'OpenSea'}</Button>
+
+            <Button style={{ backgroundColor: '#fff', border: '1px solid yellow' }} onClick={onClickMagicEden}>{magicedenRunning ? 'Crawling' : 'Magic Eden'}</Button>
         </Grid>
     );
 };

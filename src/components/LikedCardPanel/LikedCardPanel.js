@@ -1,8 +1,5 @@
-import { Grid, IconButton } from '@material-ui/core';
 import React from 'react';
 import './LikedCardPanel.css';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Stack } from '@mui/material';
 import LikedCardContainer from './LikedCardContainer';
 import LikedCardEmptyContainer from './LikedCardEmptyContainer';
 import { connect } from 'react-redux';
