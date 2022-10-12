@@ -15,8 +15,8 @@ const LikedCardRow = (props) => {
             justifyContent="space-around"
             style={{ margin: '0.5vh 0 0.5vh 0' }}>
 
-            {length >= 1 && <LikedCard address={data[0].address} tokenId={data[0].token_id} platform={data[0].platform} />}
-            {length >= 2 && <LikedCard address={data[1].address} tokenId={data[1].token_id} platform={data[1].platform} />}
+            {length >= 1 && <LikedCard data={data[0]} />}
+            {length >= 2 && <LikedCard data={data[1]} />}
 
         </Grid>
     );

@@ -59,22 +59,35 @@ const chunksOfArray = (array, chunkSize) => {
     return chunks;
 };
 
-const encodeLikedCard = (platform, address, tokenId) => {
-    return `${platform}_${address}_${tokenId}`;
+const encodeLikedCard = (params) => {
+    let result = '';
+
+    params.forEach(param => {
+        if (params.indexOf(param) < params.length - 1) {
+            result += param + '#';
+        }
+        else {
+            result += param;
+        }
+    });
+    return result;
 };
 
 const decodeLikedCard = (encoded) => {
-    const parts = encoded.split('_');
+    const parts = encoded.split('#');
 
-    if (parts < 3) {
-        return null;
+    return parts;
+};
+
+const imageFromAsset = (platform, data) => {
+    switch (platform) {
+        case 'magiceden':
+            return data.image;
+        case 'opensea':
+            return data.image_url;
+        default:
+            return data.image_url;
     }
-
-    return {
-        platform: parts[0],
-        address: parts[1],
-        token_id: parts[2],
-    };
 };
 
 export default {
@@ -84,5 +97,6 @@ export default {
     shortText,
     chunksOfArray,
     encodeLikedCard,
-    decodeLikedCard
+    decodeLikedCard,
+    imageFromAsset
 };

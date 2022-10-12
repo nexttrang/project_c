@@ -64,8 +64,6 @@ const App = (props) => {
         dispatch(mappingGoogleAccountAction());
     }, []);
 
-    const externalLink = 'https://magiceden.io/marketplace/degods';
-
     return (
         <ThemeProvider theme={darkTheme}>
             <LinkWrapper />

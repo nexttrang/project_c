@@ -59,8 +59,13 @@ function HomeContainer(props) {
     };
 
     const outOfFrame = (asset, idx) => {
-        console.log(`${asset.asset_contract.address} (${idx}) left the screen!`, currentIndexRef.current);
-        dispatch(userLikeCardAction(getter.encodeLikedCard(asset.platform, asset.asset_contract.address, asset.token_id)));
+        if (asset.platform === 'magiceden') {
+            console.log(`${asset.id} (${idx}) left the screen!`, currentIndexRef.current);
+            dispatch(userLikeCardAction(getter.encodeLikedCard([asset.platform, asset.id])));
+        } else {
+            console.log(`${asset.asset_contract.address} (${idx}) left the screen!`, currentIndexRef.current);
+            dispatch(userLikeCardAction(getter.encodeLikedCard([asset.platform, asset.asset_contract.address, asset.token_id])));
+        }
     };
 
     const swipeLeft = async () => {

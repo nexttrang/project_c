@@ -80,7 +80,6 @@ const CollectionInfoContainer = () => {
 
                         {showCollectionDes()}
                         {/* {nfts && showNFTs()} */}
-                        {/* <AssetInfoCollapse asset={asset} tokenId={tokenId} traits={traits} /> */}
                     </Stack>
                     <StyledDiv matchParent={false} style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
                         <CustomLongButton label='VISIT' onClick={onClickVisit} />
