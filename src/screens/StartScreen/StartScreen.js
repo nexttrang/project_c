@@ -6,7 +6,7 @@ import StyledDiv from '../../components/StyledDiv';
 import { subscribeScreenAction } from '../../lib/redux/actions/AppStateAction';
 import { ScreenName } from '../../App';
 
-const StartScreen = (props) => {
+const StartScreen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {

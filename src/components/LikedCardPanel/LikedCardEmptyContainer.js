@@ -4,7 +4,7 @@ import './LikedCardPanel.css';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Stack } from '@mui/material';
 
-const LikedCardEmptyContainer = (props) => {
+const LikedCardEmptyContainer = () => {
     return (
         <Stack style={{ height: '100%', alignContent: 'center', display: 'grid' }}>
 

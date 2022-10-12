@@ -3,7 +3,6 @@ import React from 'react';
 import './NFTCardPanel.css';
 import { Stack } from '@mui/material';
 import getter from '../../lib/helper/getter';
-import { connect } from 'react-redux';
 import NFTCardRow from './NFTCardRow';
 
 const NFTCardContainer = (props) => {

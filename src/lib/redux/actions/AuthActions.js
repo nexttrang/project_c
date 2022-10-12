@@ -1,6 +1,6 @@
 import getter from '../../helper/getter';
-import { formatError, keyUserAuth, keyUserData, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage, saveUserDataInLocalStorage } from '../../services/authService';
-import { getMappingAccountResult, loginGuestUser, userFetch, userLikeCard } from '../../services/firebaseService';
+import { formatError, keyUserAuth, keyUserData, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage } from '../../services/authService';
+import { getMappingAccountResult, loginGuestUser } from '../../services/firebaseService';
 
 export const SIGNUP_CONFIRM_ACTION = '[signup action] confirmed signup';
 export const SIGNUP_FAILED_ACTION = '[signup action] failed signup';

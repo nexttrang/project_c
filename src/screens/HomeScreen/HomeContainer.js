@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { navigateToAssetInfo, navigateToCollectionInfo } from '../../lib/helper/navigator';
 import './Home.css';
 import util from '../../lib/helper/util';
-import { fetchTopNfts } from '../../lib/services/firebaseService';
 import { fetchUserDataAction, userLikeCardAction } from '../../lib/redux/actions/UserAction';
 import { toggleLoadingAction } from '../../lib/redux/actions/AppStateAction';
 import { LOADER_POSITION_TINDER_CARD } from '../../components/Loader/Loader';

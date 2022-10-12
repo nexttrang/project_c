@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AuthSelector from './lib/redux/selectors/AuthSelector';
 import { checkAutoLogin } from './lib/services/authService';
 import './styles/App.css';
@@ -8,9 +8,7 @@ import DebugScreen from './screens/DebugScreen/DebugScreen';
 import { mappingGoogleAccountAction } from './lib/redux/actions/AuthActions';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import CrawlingScreen from './screens/CrawlingScreen/CrawlingScreen';
-import { style } from '@mui/system';
 import Loader from './components/Loader/Loader';
-import { unsubscribeScreenAction } from './lib/redux/actions/AppStateAction';
 import LinkWrapper from './components/LinkWrapper/LinkWrapper';
 
 const StartScreen = lazy(() => import('./screens/StartScreen'));
@@ -47,9 +45,7 @@ const nameToScreen = {
     CollectionInfo: <CollectionInfoScreen />
 };
 
-const App = (props) => {
-    const { link } = props;
-
+const App = () => {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(AuthSelector.isAuthenticated);
 
@@ -87,10 +83,4 @@ const App = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        link: state.asset.web_popup,
-    };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

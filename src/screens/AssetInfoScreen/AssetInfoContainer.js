@@ -1,13 +1,11 @@
-import { Box, Button, ButtonBase, Container, Grid, Paper, Typography } from '@material-ui/core';
-import { makeStyles, styled } from '@material-ui/styles';
+import { Box, Container } from '@material-ui/core';
 import { Stack } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import CustomLongButton from '../../components/CustomLongButton';
 import Spacer from '../../components/Spacer';
 import StyledDiv from '../../components/StyledDiv';
-import getter from '../../lib/helper/getter';
-import { openEtherScan, retrieveAsset, retrieveCollection } from '../../lib/services/openseaService';
+import {  retrieveAsset, retrieveCollection } from '../../lib/services/openseaService';
 import './AssetInfo.css';
 import AssetInfoCollapse from './AssetInfoCollapse';
 

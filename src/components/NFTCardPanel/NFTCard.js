@@ -2,8 +2,6 @@ import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import defaultImage from '../../assets/images/ic_defaultimg.webp';
-import { navigateToAssetInfo } from '../../lib/helper/navigator';
-import { retrieveAsset } from '../../lib/services/openseaService';
 import './NFTCardPanel.css';
 
 const NFTCard = (props) => {

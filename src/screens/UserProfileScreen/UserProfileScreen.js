@@ -22,7 +22,7 @@ const client = createClient(
     }),
 );
 
-const UserProfileScreen = (props) => {
+const UserProfileScreen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
