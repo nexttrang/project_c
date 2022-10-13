@@ -62,7 +62,6 @@ const App = () => {
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <LinkWrapper />
             <HashRouter>
                 <Suspense fallback={<Loader type='suspense' />}>
                     <Routes>
