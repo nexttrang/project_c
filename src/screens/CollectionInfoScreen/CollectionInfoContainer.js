@@ -13,7 +13,7 @@ import './CollectionInfo.css';
 const CollectionInfoContainer = () => {
     const { id } = useParams();
     const [collection, setCollection] = useState();
-    const [nfts, setNFTs] = useState([]);
+    // const [nfts, setNFTs] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const loadCollectionInfo = useCallback(() => {
@@ -26,31 +26,31 @@ const CollectionInfoContainer = () => {
         });
     }, []);
 
-    const loadNFTs = useCallback(() => {
-        getListedNftsByCollection(id, 0).then(response => {
-            const data = response.data;
-            setNFTs(data.results);
-            console.log(`NFTs: ${JSON.stringify(data)}`);
-        }).catch(error => {
-            console.log(error);
-        });
-    }, []);
+    // const loadNFTs = useCallback(() => {
+    //     getListedNftsByCollection(id, 0).then(response => {
+    //         const data = response.data;
+    //         setNFTs(data.results);
+    //         console.log(`NFTs: ${JSON.stringify(data)}`);
+    //     }).catch(error => {
+    //         console.log(error);
+    //     });
+    // }, []);
 
     useEffect(() => {
         loadCollectionInfo();
     }, [loadCollectionInfo]);
 
-    useEffect(() => {
-        loadNFTs();
-    }, [loadNFTs]);
+    // useEffect(() => {
+    //     loadNFTs();
+    // }, [loadNFTs]);
 
-    const showNFTs = () => {
-        return (
-            <StyledDiv>
-                <NFTCardPanel datas={nfts} />
-            </StyledDiv>
-        );
-    };
+    // const showNFTs = () => {
+    //     return (
+    //         <StyledDiv>
+    //             <NFTCardPanel datas={nfts} />
+    //         </StyledDiv>
+    //     );
+    // };
 
     const showCollectionDes = () => {
         return (

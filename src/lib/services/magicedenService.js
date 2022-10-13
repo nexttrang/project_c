@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const limitNfts = 20;
 
-export const fetchCollections = (cursor,limitCollections) => {
+export const fetchCollections = (cursor, limitCollections) => {
 
     if (!cursor) {
         cursor = 0;
@@ -13,6 +13,9 @@ export const fetchCollections = (cursor,limitCollections) => {
     const options = {
         method: 'GET',
         url: url,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
     };
 
     return axios.request(options);
@@ -24,6 +27,9 @@ export const retrieveCollectionInfo = (symbol) => {
     const options = {
         method: 'GET',
         url: url,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
     };
 
     return axios.request(options);
@@ -35,6 +41,9 @@ export const getListedNftsByCollection = (symbol, cursor) => {
     const options = {
         method: 'GET',
         url: url,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
     };
 
     return axios.request(options);
