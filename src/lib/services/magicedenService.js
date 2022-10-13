@@ -14,7 +14,7 @@ export const fetchCollections = (cursor, limitCollections) => {
         method: 'GET',
         url: url,
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'access-control-allow-origin': '*'
         }
     };
 
@@ -28,7 +28,11 @@ export const retrieveCollectionInfo = (symbol) => {
         method: 'GET',
         url: url,
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'access-control-allow-origin': '*',
+            'sec-fetch-site': 'cross-site',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-dest': 'empty',
+            'origin': 'https://king-prawn-app-jg2si.ondigitalocean.app',
         }
     };
 
@@ -42,7 +46,11 @@ export const getListedNftsByCollection = (symbol, cursor) => {
         method: 'GET',
         url: url,
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'access-control-allow-origin': '*',
+            'sec-fetch-site': 'cross-site',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-dest': 'empty',
+            'origin': 'https://king-prawn-app-jg2si.ondigitalocean.app',
         }
     };
 
