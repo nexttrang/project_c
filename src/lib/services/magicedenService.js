@@ -14,7 +14,6 @@ export const fetchCollections = (cursor, limitCollections) => {
         method: 'GET',
         url: url,
         headers: {
-            'access-control-allow-origin': '*'
         }
     };
 
@@ -28,7 +27,6 @@ export const retrieveCollectionInfo = (symbol) => {
         method: 'GET',
         url: url,
         headers: {
-            'access-control-allow-origin': '*',
             'sec-fetch-site': 'cross-site',
             'sec-fetch-mode': 'cors',
             'sec-fetch-dest': 'empty',
@@ -46,7 +44,6 @@ export const getListedNftsByCollection = (symbol, cursor) => {
         method: 'GET',
         url: url,
         headers: {
-            'access-control-allow-origin': '*',
             'sec-fetch-site': 'cross-site',
             'sec-fetch-mode': 'cors',
             'sec-fetch-dest': 'empty',
