@@ -1,4 +1,4 @@
-import { Box,  Container } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import { Stack } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import CustomLongButton from '../../components/CustomLongButton';
 import NFTCardPanel from '../../components/NFTCardPanel';
 import NFTDes from '../../components/NFTDes';
 import StyledDiv from '../../components/StyledDiv';
+import getter from '../../lib/helper/getter';
 import { retrieveCollectionInfo, getListedNftsByCollection } from '../../lib/services/magicedenService';
 import './CollectionInfo.css';
 
@@ -73,7 +74,7 @@ const CollectionInfoContainer = () => {
                             className='card_header_collection_info'
                             component="img"
                             alt={collection.name}
-                            src={collection.image}
+                            src={getter.imageFromAsset(collection)}
                         />
 
                         {showCollectionDes()}

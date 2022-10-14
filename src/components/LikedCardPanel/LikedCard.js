@@ -47,7 +47,7 @@ const LikedCard = (props) => {
 
     useEffect(() => {
         if (asset != null) {
-            setImageUrl(getter.imageFromAsset(platform, asset));
+            setImageUrl(getter.imageFromAsset(asset));
             setName(asset.name);
         }
     }, [asset]);

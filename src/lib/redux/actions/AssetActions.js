@@ -12,7 +12,7 @@ export const loadAssestsAction = (cursor, key) => {
     return (dispatch) => {
         fetchTopNfts(cursor).then(response => {
             const data = response.data;
-            // console.log(data);
+            console.log(`fetchTopNfts: ${JSON.stringify(data)}`);
 
             dispatch(importAssetsAction(util.addSwipeAttributeIntoAssets(data), key));
 
@@ -31,7 +31,7 @@ export const loadAssestsAction = (cursor, key) => {
                     break;
             }
         }).catch(error => {
-            console.log(error);
+            console.log(`fetchTopNfts error: ${error}`);
         });
     };
 };

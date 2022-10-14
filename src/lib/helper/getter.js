@@ -79,15 +79,8 @@ const decodeLikedCard = (encoded) => {
     return parts;
 };
 
-const imageFromAsset = (platform, data) => {
-    switch (platform) {
-        case 'magiceden':
-            return data.image;
-        case 'opensea':
-            return data.image_url;
-        default:
-            return data.image_url;
-    }
+const imageFromAsset = (data) => {
+    return data.image_url ? data.image_url : data.image;
 };
 
 export default {

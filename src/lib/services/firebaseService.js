@@ -65,7 +65,7 @@ export const setSpecificDoc = (_col, _doc, jsData) => {
     }, { merge: true });
 };
 
-const limitPerPage = 2;
+const limitPerPage = 20;
 export const fetchTopNfts = (cursor) => baseXRest.request(`nfts/fetch_top_nfts?limit=${limitPerPage}&cursor=${cursor}`, 'GET');
 
 export const userLikeCard = (assetAddress) => baseXRest.request('user/like_card', 'POST', { asset_address: assetAddress });
