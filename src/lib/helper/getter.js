@@ -83,6 +83,10 @@ const imageFromAsset = (data) => {
     return data.image_url ? data.image_url : data.image;
 };
 
+const idFromAsset = (data) => {
+    return data.id ? data.id : data.symbol;
+};
+
 export default {
     getBlockchainInfo,
     parseGuestUserData,
@@ -91,5 +95,6 @@ export default {
     chunksOfArray,
     encodeLikedCard,
     decodeLikedCard,
-    imageFromAsset
+    imageFromAsset,
+    idFromAsset
 };

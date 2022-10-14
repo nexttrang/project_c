@@ -62,7 +62,7 @@ const CollectionInfoContainer = () => {
     const onClickVisit = (e) => {
         e.preventDefault();
         // openEtherScan(payoutAddress);
-        setSearchParams({ request: 'webpopup', host: 'magiceden', endpoint: `${collection.symbol}` });
+        setSearchParams({ request: 'webpopup', host: 'magiceden', endpoint: `${getter.idFromAsset(collection)}` });
     };
 
     return (
