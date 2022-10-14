@@ -9,10 +9,7 @@ const NFTCard = (props) => {
     const [imageUrl, setImageUrl] = useState(defaultImage);
     const [title, setTitle] = useState('');
 
-    const navigate = useNavigate();
-
     const onClick = () => {
-        // navigateToAssetInfo(navigate, address, tokenId);
     };
 
     useEffect(() => {

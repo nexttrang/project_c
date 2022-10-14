@@ -1,3 +1,4 @@
+import logger from '../../helper/logger';
 import { saveUserDataInLocalStorage } from '../../services/authService';
 import { userFetch, userLikeCard } from '../../services/firebaseService';
 
@@ -8,12 +9,12 @@ export function fetchUserDataAction() {
         userFetch()
             .then(response => {
                 const data = response.data;
-                console.log(`userData: ${JSON.stringify(data)}`);
+                logger.log('UserAction',`userData: ${JSON.stringify(data)}`);
                 saveUserDataInLocalStorage(data);
                 dispatch(confirmedFetchUserDataAction(data));
             })
             .catch(error => {
-                console.log(error);
+                logger.log('UserAction',error);
             });
     };
 }

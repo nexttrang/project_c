@@ -1,8 +1,9 @@
-import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useNavigate } from 'react-router-dom';
 import defaultImage from '../../assets/images/ic_defaultimg.webp';
 import getter from '../../lib/helper/getter';
+import logger from '../../lib/helper/logger';
 import { navigateToAssetInfo, navigateToCollectionInfo } from '../../lib/helper/navigator';
 import { retrieveCollectionInfo } from '../../lib/services/magicedenService';
 import { retrieveAsset } from '../../lib/services/openseaService';
@@ -34,13 +35,13 @@ const LikedCard = (props) => {
             retrieveAsset(id, token_id).then(response => {
                 setAsset(response.data);
             }).catch(error => {
-                console.log(error);
+                logger.log('LikedCard',`retrieveAsset error: ${error}`);
             });
         } else if (platform === 'magiceden') {
             retrieveCollectionInfo(id).then(response => {
                 setAsset(response.data);
             }).catch(error => {
-                console.log(error);
+                logger.log('LikedCard',`retrieveCollectionInfo error: ${error}`);
             });
         }
     }, []);
@@ -53,13 +54,7 @@ const LikedCard = (props) => {
     }, [asset]);
 
     return (
-        <Box
-            className='box_likedcard'
-            component="img"
-            alt={name}
-            src={imageUrl}
-            onClick={onClick}
-        />
+        <LazyLoadImage src={imageUrl} className='box_likedcard' onClick={onClick} />
     );
 };
 

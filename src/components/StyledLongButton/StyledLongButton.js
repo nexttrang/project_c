@@ -27,7 +27,6 @@ const StyledLongButton = (props) => {
     };
 
     useEffect(() => {
-        console.log(`toggle: ${toggle}`);
         setShouldExpand(toggle && type === 'expand');
     }, [toggle]);
 

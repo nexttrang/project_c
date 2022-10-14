@@ -16,9 +16,11 @@ import { toggleLoadingAction } from '../../lib/redux/actions/AppStateAction';
 import { LOADER_POSITION_TINDER_CARD } from '../../components/Loader/Loader';
 import getter from '../../lib/helper/getter';
 import { keyAssets, keyNextAssets, keyPrevAssets } from '../../lib/services/assetService';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import logger from '../../lib/helper/logger';
 
 function HomeContainer(props) {
-    const { query, assets, nextAssets, prevAssests, afterCursor, beforeCursor } = props;
+    const { assets, nextAssets, prevAssests, afterCursor, beforeCursor } = props;
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -51,7 +53,7 @@ function HomeContainer(props) {
     const swiped = async (direction, nameToDelete, index) => {
         assets[index].swipe = direction;
         updateCurrentIndex(index - 1);
-        console.log(`swiped: ${assets[index].swipe}`);
+        logger.log('Home',`swiped: ${assets[index].swipe}`);
 
         await util.delay(500);
         setShowTag('');
@@ -59,10 +61,10 @@ function HomeContainer(props) {
 
     const outOfFrame = (asset, idx) => {
         if (asset.platform === 'magiceden') {
-            console.log(`${asset.id} (${idx}) left the screen!`, currentIndexRef.current);
+            logger.log('Home',`${asset.id} (${idx}) left the screen! ${currentIndexRef.current}`);
             dispatch(userLikeCardAction(getter.encodeLikedCard([asset.platform, asset.id])));
         } else {
-            console.log(`${asset.asset_contract.address} (${idx}) left the screen!`, currentIndexRef.current);
+            logger.log('Home',`${asset.asset_contract.address} (${idx}) left the screen! ${currentIndexRef.current}`);
             dispatch(userLikeCardAction(getter.encodeLikedCard([asset.platform, asset.asset_contract.address, asset.token_id])));
         }
     };
@@ -84,7 +86,6 @@ function HomeContainer(props) {
     // increase current index and show card
     const goBack = async () => {
         if (prevAssests.length === 0) {
-            // console.log('can not go back');
             return;
         }
 
@@ -102,13 +103,13 @@ function HomeContainer(props) {
 
     const onSwipeFullfilled = (asset, direction) => {
         asset.swipe = direction;
-        console.log(`onSwipeFullfilled: ${asset.swipe}`);
+        logger.log('Home',`onSwipeFullfilled: ${asset.swipe}`);
         setShowTag(direction);
     };
 
     const onSwipeUnFullfilled = (asset, direction) => {
         asset.swipe = direction;
-        console.log(`onSwipeUnFullfilled: ${asset.swipe}`);
+        logger.log('Home',`onSwipeUnFullfilled: ${asset.swipe}`);
         setShowTag(direction);
     };
 
@@ -160,7 +161,6 @@ function HomeContainer(props) {
     }, [assets]);
 
     useEffect(() => {
-        // console.log(`here current index: ${currentIndex}`);
         setCanSwipe(currentIndex >= 0);
 
         if (currentIndex < 0) { //move next assests to current assets
@@ -169,10 +169,6 @@ function HomeContainer(props) {
             shiftToPrevAssests();
         }
     }, [currentIndex]);
-
-    useEffect(() => {
-        console.log(`query: ${query}`);
-    }, [query]);
 
     const showCardInfo = (asset) => {
         return (
@@ -216,7 +212,7 @@ function HomeContainer(props) {
                                 }
                             >
 
-                                <Box style={{ backgroundImage: `url(${asset.image_url})`, }} className={classes.card} />
+                                <LazyLoadImage src={getter.imageFromAsset(asset)} className='card_image' />
 
                                 {showTag === asset.swipe && showTags(asset)}
 
@@ -247,17 +243,6 @@ const useStyles = makeStyles({
     },
     swipe: {
         position: 'absolute',
-    },
-    card: {
-        position: 'relative',
-        width: '91.7vw',
-        height: '54.9vh',
-        padding: 20,
-        maxWidth: '85vw',
-        borderRadius: 20,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
     },
     like: {
         width: '135px',
@@ -295,7 +280,6 @@ const useStyles = makeStyles({
 
 const mapStateToProps = (state) => {
     return {
-        query: state.search.nft_query,
         assets: state.asset.assets,
         nextAssets: state.asset.next_assets,
         prevAssests: state.asset.prev_assets,

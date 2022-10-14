@@ -1,13 +1,17 @@
 import { Box, Container } from '@material-ui/core';
 import { Stack } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { json, useParams, useSearchParams } from 'react-router-dom';
 import CustomLongButton from '../../components/CustomLongButton';
-import NFTCardPanel from '../../components/NFTCardPanel';
 import NFTDes from '../../components/NFTDes';
 import StyledDiv from '../../components/StyledDiv';
+import StyledLongButton from '../../components/StyledLongButton';
 import getter from '../../lib/helper/getter';
-import { retrieveCollectionInfo, getListedNftsByCollection } from '../../lib/services/magicedenService';
+import logger from '../../lib/helper/logger';
+import AssetSelector from '../../lib/redux/selectors/AssetSelector';
+import { retrieveCollectionInfo } from '../../lib/services/magicedenService';
+import iconDescription from '../../assets/images/icon_description.webp';
 import './CollectionInfo.css';
 
 
@@ -16,42 +20,26 @@ const CollectionInfoContainer = () => {
     const [collection, setCollection] = useState();
     // const [nfts, setNFTs] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const localAsset = useSelector((state) => AssetSelector.magicedenAsset(state, id));
 
     const loadCollectionInfo = useCallback(() => {
-        retrieveCollectionInfo(id).then(response => {
-            const data = response.data;
-            setCollection(data);
-            console.log(`collection: ${JSON.stringify(data)}`);
-        }).catch(error => {
-            console.log(error);
-        });
+        if (!localAsset) {
+            retrieveCollectionInfo(id).then(response => {
+                const data = response.data;
+                setCollection(data);
+                logger.log('CollectionInfo', `collection: ${JSON.stringify(data)}`);
+            }).catch(error => {
+                logger.log('CollectionInfo', `${error}`);
+            });
+        } else {
+            logger.log('CollectionInfo', `local Asset: ${JSON.stringify(localAsset)}`);
+            setCollection(localAsset);
+        }
     }, []);
-
-    // const loadNFTs = useCallback(() => {
-    //     getListedNftsByCollection(id, 0).then(response => {
-    //         const data = response.data;
-    //         setNFTs(data.results);
-    //         console.log(`NFTs: ${JSON.stringify(data)}`);
-    //     }).catch(error => {
-    //         console.log(error);
-    //     });
-    // }, []);
 
     useEffect(() => {
         loadCollectionInfo();
     }, [loadCollectionInfo]);
-
-    // useEffect(() => {
-    //     loadNFTs();
-    // }, [loadNFTs]);
-
-    // const showNFTs = () => {
-    //     return (
-    //         <StyledDiv>
-    //             <NFTCardPanel datas={nfts} />
-    //         </StyledDiv>
-    //     );
-    // };
 
     const showCollectionDes = () => {
         return (
@@ -61,7 +49,6 @@ const CollectionInfoContainer = () => {
 
     const onClickVisit = (e) => {
         e.preventDefault();
-        // openEtherScan(payoutAddress);
         setSearchParams({ request: 'webpopup', host: 'magiceden', endpoint: `${getter.idFromAsset(collection)}` });
     };
 
@@ -77,8 +64,7 @@ const CollectionInfoContainer = () => {
                             src={getter.imageFromAsset(collection)}
                         />
 
-                        {showCollectionDes()}
-                        {/* {nfts && showNFTs()} */}
+                        <StyledLongButton icon={iconDescription} label={'Description'} type={'expand'} expandContent={showCollectionDes()} />
                     </Stack>
                     <StyledDiv matchParent={false} style={{ position: 'relative', top: '1vh', display: 'flex', justifyContent: 'center' }}>
                         <CustomLongButton label='VISIT' onClick={onClickVisit} />

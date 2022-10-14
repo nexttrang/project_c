@@ -11,7 +11,6 @@ const SearchBar = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // console.log(`query: ${query}`);
         dispatch(searchNFTs(query));
     }, [query]);
 

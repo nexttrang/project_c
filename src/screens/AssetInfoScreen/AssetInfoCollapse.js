@@ -10,6 +10,7 @@ import NFTCollectionInfo from '../../components/NFTCollectionInfo';
 import NFTDetailTable from '../../components/NFTDetailTable';
 import NFTDes from '../../components/NFTDes';
 import NFTProperties from '../../components/NFTProperties';
+import logger from '../../lib/helper/logger';
 
 const AssetInfoCollapse = (props) => {
     const { asset, tokenId, traits } = props;
@@ -19,7 +20,7 @@ const AssetInfoCollapse = (props) => {
     const shortContractId = getter.shortText(tokenId);
 
     useEffect(() => {
-        console.log(`trait: ${JSON.stringify(traits)}`);
+        logger.log('AssetInfo', `trait: ${JSON.stringify(traits)}`);
     }, [traits]);
 
     const getNFTDetail = () => {

@@ -1,11 +1,14 @@
 import { Box, Container } from '@material-ui/core';
 import { Stack } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 import CustomLongButton from '../../components/CustomLongButton';
 import Spacer from '../../components/Spacer';
 import StyledDiv from '../../components/StyledDiv';
-import {  retrieveAsset, retrieveCollection } from '../../lib/services/openseaService';
+import logger from '../../lib/helper/logger';
+import AssetSelector from '../../lib/redux/selectors/AssetSelector';
+import { retrieveAsset, retrieveCollection } from '../../lib/services/openseaService';
 import './AssetInfo.css';
 import AssetInfoCollapse from './AssetInfoCollapse';
 
@@ -17,11 +20,10 @@ const AssetInfoContainer = () => {
     const [collectionInfo, setCollectionInfo] = useState();
     const [payoutAddress, setPayoutAddress] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const localAsset = useSelector(state => AssetSelector.openseaAsset(state, contactAddress, tokenId));
 
     const getCalculatedTraits = () => {
         const statsCount = collectionInfo.stats.count;
-        // console.log(`statsCount: ${statsCount}`);
 
         const validTraits = traits.filter(trait => { return typeof trait.value === 'string'; });
 
@@ -42,27 +44,25 @@ const AssetInfoContainer = () => {
 
     const onClickVisit = (e) => {
         e.preventDefault();
-        // openEtherScan(payoutAddress);
         setSearchParams({ request: 'webpopup', host: 'opensea', endpoint: `${asset.asset_contract.address}/${asset.token_id}` });
     };
 
     const loadAssetInfo = useCallback(() => {
         retrieveAsset(contactAddress, tokenId).then(response => {
             setAsset(response.data);
-            // console.log(`loadAssetInfo : ${JSON.stringify(response)}`);
+            logger.log('AssetInfo', `loadAssetInfo : ${JSON.stringify(response)}`);
         }).catch(error => {
-            console.log(error);
+            logger.log('AssetInfo', error);
         });
     }, []);
 
     const loadCollectionInfo = useCallback(() => {
         if (!slug) return;
-        console.log(`slug: ${slug}`);
         retrieveCollection(slug).then(response => {
             setCollectionInfo(response.data.collection);
-            // console.log(`loadCollectionInfo: ${JSON.stringify(response)}`);
+            logger.log('AssetInfo', `loadCollectionInfo: ${JSON.stringify(response)}`);
         }).catch(error => {
-            console.log(error);
+            logger.log('AssetInfo', error);
         });
     }, [slug]);
 

@@ -1,3 +1,4 @@
+import logger from '../../helper/logger';
 import { getNativeBalance, keyNativeBalance, keyWalletSignature, saveNativeBalanceInLocalStorage, saveSignatureInLocalStorage } from '../../services/moralisService';
 
 export const NATIVE_BALANCE_IMPORT_CONFIRM_ACTION = '[moralis action] import native balance';
@@ -15,7 +16,7 @@ export function importNativeBalanceAction(address) {
             saveNativeBalanceInLocalStorage(data);
             dispatch(confirmImportNativeBalanceAction(data));
         }).catch(error => {
-            console.log(`moralis error: ${error}`);
+            logger.log('MoralisAction',`moralis error: ${error}`);
         });
     };
 }

@@ -1,4 +1,5 @@
 import getter from '../../helper/getter';
+import logger from '../../helper/logger';
 import { formatError, keyUserAuth, keyUserData, runLogOutTimer, saveGoogleAccountInLocalStorage, saveTokenInLocalStorage } from '../../services/authService';
 import { getMappingAccountResult, loginGuestUser } from '../../services/firebaseService';
 
@@ -39,14 +40,14 @@ export function loginAction() {
 export function mappingGoogleAccountAction() {
     return (dispatch) => {
         getMappingAccountResult().then(result => {
-            console.log(`result: ${JSON.stringify(result)}`);
+            logger.log('AuthAction', `getMappingAccountResult: ${JSON.stringify(result)}`);
 
             const data = getter.parseMappingGoogleAccountData(result.user);
 
             saveGoogleAccountInLocalStorage(data);
             dispatch(confirmedMappingGoogleAccountAction(data));
         }).catch(error => {
-            console.log(`mapping account error: ${error}`);
+            logger.log('AuthAction', `mapping account error: ${error}`);
         });
     };
 }

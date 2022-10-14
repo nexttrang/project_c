@@ -4,9 +4,6 @@ export const keyUserAuth = 'user_auth';
 export const keyUserData = 'user_data';
 
 export function formatError(errorResponse) {
-
-    console.log(errorResponse.error.message);
-
     switch (errorResponse.error.message) {
         case 'EMAIL_EXISTS':
             return 'Email already exists';

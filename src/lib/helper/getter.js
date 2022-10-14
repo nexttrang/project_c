@@ -55,7 +55,6 @@ const chunksOfArray = (array, chunkSize) => {
         chunks.push(array.slice(i, i + chunkSize));
     }
 
-    // console.log(`chunks: ${JSON.stringify(chunks)}`);
     return chunks;
 };
 

@@ -1,6 +1,7 @@
 import Moralis from 'moralis';
 import { EvmChain } from '@moralisweb3/evm-utils';
 import { confirmImportNativeBalanceAction, confirmMetaMaskVerify } from '../redux/actions/MoralisAction';
+import logger from '../helper/logger';
 
 Moralis.start({
     apiKey: process.env.REACT_APP_MORALIS_API_KEY,
@@ -17,7 +18,6 @@ export const getNativeBalance = (address) => {
 };
 
 export function saveNativeBalanceInLocalStorage(data) {
-    console.log(`local data: ${data}`);
     localStorage.setItem(keyNativeBalance, JSON.stringify(data));
 }
 

@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import logger from '../../lib/helper/logger';
 import './Loader.css';
 
 export const LOADER_POSITION_TINDER_CARD = 'tinder_card';
@@ -10,7 +11,7 @@ const Loader = (props) => {
     const { isLoading, position, subscribe, screen, type = '' } = props;
 
     useEffect(() => {
-        console.log(`isLoading: ${isLoading} - position: ${position} - subscribe: ${subscribe} - screen:${screen}`);
+        logger.log('Loader',`isLoading: ${isLoading} - position: ${position} - subscribe: ${subscribe} - screen:${screen}`);
     }, [isLoading, position, subscribe, screen]);
 
     const enableCondition = isLoading && (type === 'suspense' || screen === subscribe);

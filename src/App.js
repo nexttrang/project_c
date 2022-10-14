@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core';
 import CrawlingScreen from './screens/CrawlingScreen/CrawlingScreen';
 import Loader from './components/Loader/Loader';
 import LinkWrapper from './components/LinkWrapper/LinkWrapper';
+import logger from './lib/helper/logger';
 
 const StartScreen = lazy(() => import('./screens/StartScreen'));
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
@@ -50,8 +51,7 @@ const App = () => {
     const isAuthenticated = useSelector(AuthSelector.isAuthenticated);
 
     const navigate = (screenName) => {
-        console.log(`navigate: ${screenName}`);
-
+        logger.log('App', `navigate to ${screenName}`);
         return isAuthenticated ? nameToScreen[screenName] : <Navigate to="/" />;
     };
 

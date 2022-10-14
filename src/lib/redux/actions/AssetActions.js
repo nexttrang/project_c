@@ -1,3 +1,4 @@
+import logger from '../../helper/logger';
 import util from '../../helper/util';
 import { keyAssets, keyNextAssets, keyPrevAssets, saveAssetsInLocalStorage } from '../../services/assetService';
 import { fetchTopNfts } from '../../services/firebaseService';
@@ -12,7 +13,7 @@ export const loadAssestsAction = (cursor, key) => {
     return (dispatch) => {
         fetchTopNfts(cursor).then(response => {
             const data = response.data;
-            console.log(`fetchTopNfts: ${JSON.stringify(data)}`);
+            logger.log('AssetAction', `fetchTopNfts: ${JSON.stringify(data)}`);
 
             dispatch(importAssetsAction(util.addSwipeAttributeIntoAssets(data), key));
 
@@ -31,7 +32,7 @@ export const loadAssestsAction = (cursor, key) => {
                     break;
             }
         }).catch(error => {
-            console.log(`fetchTopNfts error: ${error}`);
+            logger.log('AssetAction', `fetchTopNfts error: ${error}`);
         });
     };
 };

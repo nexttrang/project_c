@@ -45,8 +45,10 @@ const CrawlingScreen = () => {
                     description: asset.description,
                     image_url: asset.image_url,
                     token_id: asset.token_id,
+                    slug: asset.collection.slug,
                     asset_contract: {
-                        address: asset.asset_contract.address
+                        address: asset.asset_contract.address,
+                        payout_address: asset.asset_contract.payout_address
                     }
                 };
 

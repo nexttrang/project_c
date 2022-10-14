@@ -10,13 +10,14 @@ import { ConnectKitButton } from 'connectkit';
 import StyledLongButton from '../../components/StyledLongButton/StyledLongButton';
 import LikedCardPanel from '../../components/LikedCardPanel';
 import StyledDiv from '../../components/StyledDiv';
+import logger from '../../lib/helper/logger';
 
 const UserProfileContainer = (props) => {
     const { auth, balance, address, signature } = props;
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(`auth: ${JSON.stringify(auth)}`);
+        logger.log('UserProfile', `auth: ${JSON.stringify(auth)}`);
         dispatch(mappingGoogleAccountAction());
     }, []);
 
