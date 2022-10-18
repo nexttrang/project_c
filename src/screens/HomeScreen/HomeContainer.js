@@ -6,7 +6,7 @@ import Like from '../../assets/images/ic_tag_like.webp';
 import Nope from '../../assets/images/ic_tag_nope.webp';
 import { Stack } from '@mui/material';
 import { connect, useDispatch } from 'react-redux';
-import { importAssetsAction, loadAssestsAction } from '../../lib/redux/actions/AssetActions';
+import { importAssetsAction, importFullDataAssetsAction, loadAssestsAction, updateCursorAction } from '../../lib/redux/actions/AssetActions';
 import { useNavigate } from 'react-router-dom';
 import { navigateToAssetInfo, navigateToCollectionInfo } from '../../lib/helper/navigator';
 import './Home.css';
@@ -15,12 +15,14 @@ import { fetchUserDataAction, userLikeCardAction } from '../../lib/redux/actions
 import { toggleLoadingAction } from '../../lib/redux/actions/AppStateAction';
 import { LOADER_POSITION_TINDER_CARD } from '../../components/Loader/Loader';
 import getter from '../../lib/helper/getter';
-import { keyAssets, keyNextAssets, keyPrevAssets } from '../../lib/services/assetService';
+import { keyAfterCursor, keyAssets, keyBeforeCursor, keyCurrentCursor, keyNextAssets, keyPrevAssets, loadFullDataAssets } from '../../lib/services/assetService';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import logger from '../../lib/helper/logger';
+import comparator from '../../lib/helper/comparator';
+import checker from '../../lib/helper/checker';
 
 function HomeContainer(props) {
-    const { assets, nextAssets, prevAssests, afterCursor, beforeCursor } = props;
+    const { assets, nextAssets, prevAssests, afterCursor, beforeCursor, currentCursor } = props;
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -42,7 +44,15 @@ function HomeContainer(props) {
     );
 
     const loadAssests = useCallback((cursor, useCase = keyAssets) => {
-        dispatch(loadAssestsAction(cursor, useCase));
+        const localData = loadFullDataAssets();
+        if (checker.validateLocalAssetData(localData)) {
+            importFullDataAssetsAction(localData);
+        }
+
+        if (!assets.length) {
+            dispatch(loadAssestsAction(cursor, useCase));
+        }
+
     }, []);
 
     const fetchUserData = useCallback(() => {
@@ -53,7 +63,7 @@ function HomeContainer(props) {
     const swiped = async (direction, nameToDelete, index) => {
         assets[index].swipe = direction;
         updateCurrentIndex(index - 1);
-        logger.log('Home',`swiped: ${assets[index].swipe}`);
+        logger.log('Home', `swiped: ${assets[index].swipe}`);
 
         await util.delay(500);
         setShowTag('');
@@ -61,10 +71,10 @@ function HomeContainer(props) {
 
     const outOfFrame = (asset, idx) => {
         if (asset.platform === 'magiceden') {
-            logger.log('Home',`${asset.id} (${idx}) left the screen! ${currentIndexRef.current}`);
+            logger.log('Home', `${asset.id} (${idx}) left the screen! ${currentIndexRef.current}`);
             dispatch(userLikeCardAction(getter.encodeLikedCard([asset.platform, asset.id])));
         } else {
-            logger.log('Home',`${asset.asset_contract.address} (${idx}) left the screen! ${currentIndexRef.current}`);
+            logger.log('Home', `${asset.asset_contract.address} (${idx}) left the screen! ${currentIndexRef.current}`);
             dispatch(userLikeCardAction(getter.encodeLikedCard([asset.platform, asset.asset_contract.address, asset.token_id])));
         }
     };
@@ -103,13 +113,13 @@ function HomeContainer(props) {
 
     const onSwipeFullfilled = (asset, direction) => {
         asset.swipe = direction;
-        logger.log('Home',`onSwipeFullfilled: ${asset.swipe}`);
+        logger.log('Home', `onSwipeFullfilled: ${asset.swipe}`);
         setShowTag(direction);
     };
 
     const onSwipeUnFullfilled = (asset, direction) => {
         asset.swipe = direction;
-        logger.log('Home',`onSwipeUnFullfilled: ${asset.swipe}`);
+        logger.log('Home', `onSwipeUnFullfilled: ${asset.swipe}`);
         setShowTag(direction);
     };
 
@@ -132,6 +142,9 @@ function HomeContainer(props) {
         dispatch(importAssetsAction([...assets], keyPrevAssets));
         dispatch(importAssetsAction([...nextAssets], keyAssets));
         dispatch(importAssetsAction([], keyNextAssets));
+
+        dispatch(updateCursorAction(currentCursor, keyBeforeCursor));
+        dispatch(updateCursorAction(afterCursor, keyCurrentCursor));
         dispatch(loadAssestsAction(afterCursor, keyNextAssets));
     };
 
@@ -139,6 +152,9 @@ function HomeContainer(props) {
         dispatch(importAssetsAction([...assets], keyNextAssets));
         dispatch(importAssetsAction([...prevAssests], keyAssets));
         dispatch(importAssetsAction([], keyPrevAssets));
+
+        dispatch(updateCursorAction(currentCursor, keyAfterCursor));
+        dispatch(updateCursorAction(beforeCursor, keyCurrentCursor));
         dispatch(loadAssestsAction(beforeCursor, keyPrevAssets));
     };
 
@@ -284,7 +300,8 @@ const mapStateToProps = (state) => {
         nextAssets: state.asset.next_assets,
         prevAssests: state.asset.prev_assets,
         afterCursor: state.asset.cursor.after,
-        beforeCursor: state.asset.cursor.before
+        beforeCursor: state.asset.cursor.before,
+        currentCursor: state.asset.cursor.current,
     };
 };
 

@@ -11,6 +11,7 @@ import CrawlingScreen from './screens/CrawlingScreen/CrawlingScreen';
 import Loader from './components/Loader/Loader';
 import LinkWrapper from './components/LinkWrapper/LinkWrapper';
 import logger from './lib/helper/logger';
+import { requestPermission } from './lib/services/firebaseService';
 
 const StartScreen = lazy(() => import('./screens/StartScreen'));
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
@@ -58,6 +59,7 @@ const App = () => {
     useEffect(() => {
         checkAutoLogin(dispatch);
         dispatch(mappingGoogleAccountAction());
+        requestPermission();
     }, []);
 
     return (

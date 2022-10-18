@@ -1,6 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, getRedirectResult, GoogleAuthProvider, signInAnonymously, signInWithRedirect } from 'firebase/auth';
 import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore/lite';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { onBackgroundMessage } from 'firebase/messaging/sw';
+
+import logger from '../helper/logger';
 import baseXRest from './baseXRest';
 
 const firebaseConfig = {
@@ -18,6 +22,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 export const db = getFirestore(firebaseApp);
 export const provider = new GoogleAuthProvider();
 export const auth = getAuth(firebaseApp);
+const messaging = getMessaging(firebaseApp);
 
 export const getMyCollection = (_col) => {
     return collection(db, _col);
@@ -64,6 +69,34 @@ export const setSpecificDoc = (_col, _doc, jsData) => {
         timestamp: serverTimestamp()
     }, { merge: true });
 };
+
+export const requestPermission = () => {
+    Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+            logger.log('Notification permission granted.');
+        }
+    });
+};
+
+getToken(messaging, { vapidKey: 'BHLgBpUtDGiHgnIajIMidCnRX3Sf2WnG0AzelDx6tLwGWJM4vGDJGUfWmXdToSGIU0MM5FK-916YV_cLUo19Y64' }).then((currentToken) => {
+    if (currentToken) {
+        // Send the token to your server and update the UI if necessary
+        // ...
+        logger.log(`fcm token: ${currentToken}`);
+    } else {
+        // Show permission request UI
+        console.log('No registration token available. Request permission to generate one.');
+        // ...
+    }
+}).catch((err) => {
+    console.log('An error occurred while retrieving token. ', err);
+    // ...
+});
+
+onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload);
+    // ...
+});
 
 const limitPerPage = 20;
 export const fetchTopNfts = (cursor) => baseXRest.request(`nfts/fetch_top_nfts?limit=${limitPerPage}&cursor=${cursor}`, 'GET');

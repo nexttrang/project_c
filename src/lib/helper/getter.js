@@ -1,3 +1,5 @@
+import logger from './logger';
+
 const getBlockchainInfo = (schema_version) => {
     switch (schema_version) {
         case 'ERC1155':
@@ -86,6 +88,15 @@ const idFromAsset = (data) => {
     return data.id ? data.id : data.symbol;
 };
 
+const unixTime = (date) => {
+    return Math.floor(date.getTime() / 1000);
+};
+
+const unixTimeNow = () => {
+    logger.log(`date now: ${new Date()}`);
+    return unixTime(new Date());
+};
+
 export default {
     getBlockchainInfo,
     parseGuestUserData,
@@ -95,5 +106,6 @@ export default {
     encodeLikedCard,
     decodeLikedCard,
     imageFromAsset,
-    idFromAsset
+    idFromAsset,
+    unixTimeNow
 };
