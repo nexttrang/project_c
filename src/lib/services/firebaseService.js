@@ -1,9 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, getRedirectResult, GoogleAuthProvider, signInAnonymously, signInWithRedirect } from 'firebase/auth';
 import { getFirestore, collection, getDocs, setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore/lite';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { onBackgroundMessage } from 'firebase/messaging/sw';
-
+import { getMessaging, getToken } from 'firebase/messaging';
 import logger from '../helper/logger';
 import baseXRest from './baseXRest';
 
@@ -93,10 +91,6 @@ getToken(messaging, { vapidKey: 'BHLgBpUtDGiHgnIajIMidCnRX3Sf2WnG0AzelDx6tLwGWJM
     // ...
 });
 
-onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
-    // ...
-});
 
 const limitPerPage = 20;
 export const fetchTopNfts = (cursor) => baseXRest.request(`nfts/fetch_top_nfts?limit=${limitPerPage}&cursor=${cursor}`, 'GET');

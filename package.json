@@ -38,8 +38,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node ./post-install.js && react-scripts start",
-    "build": "node ./post-install.js && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -62,7 +62,6 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.31.8",
-    "gently-copy": "^3.2.0"
+    "eslint-plugin-react": "^7.31.8"
   }
 }
