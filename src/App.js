@@ -6,11 +6,12 @@ import { checkAutoLogin } from './lib/services/authService';
 import './styles/App.css';
 import DebugScreen from './screens/DebugScreen/DebugScreen';
 import { mappingGoogleAccountAction } from './lib/redux/actions/AuthActions';
-import { createTheme, ThemeProvider } from '@material-ui/core';
+import { createTheme, MobileStepper, ThemeProvider } from '@material-ui/core';
 import CrawlingScreen from './screens/CrawlingScreen/CrawlingScreen';
 import Loader from './components/Loader/Loader';
 import logger from './lib/helper/logger';
 import { Helmet } from 'react-helmet';
+import mobileService from './lib/services/mobileService';
 
 const StartScreen = lazy(() => import('./screens/StartScreen'));
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
@@ -62,13 +63,12 @@ const App = (props) => {
         dispatch(mappingGoogleAccountAction());
     }, []);
 
+    useEffect(() => {
+        mobileService.showToast(`access token: ${accessToken}`);
+    }, [accessToken]);
+
     return (
         <div>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>React app</title>
-                <meta name="access_token" content={accessToken} />
-            </Helmet>
             <ThemeProvider theme={darkTheme}>
                 <HashRouter>
                     <Suspense fallback={<Loader type='suspense' />}>
@@ -88,7 +88,6 @@ const App = (props) => {
                 <Loader />
             </ThemeProvider >
         </div>
-
     );
 };
 

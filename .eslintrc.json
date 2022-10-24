@@ -17,6 +17,9 @@
     "plugins": [
         "react"
     ],
+    "ignorePatterns": [
+        "mobileService.js"
+    ],
     "rules": {
         "indent": [
             "error",
