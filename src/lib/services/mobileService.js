@@ -8,7 +8,7 @@ const showToast = (toast) => {
     }
 }
 
-const saveFcmToken = (token) => {
+const saveAccessToken = (token) => {
     if (isMobile) {
         Mobile.saveFcmToken(token);
     }
@@ -16,5 +16,5 @@ const saveFcmToken = (token) => {
 
 export default {
     showToast,
-    saveFcmToken
+    saveAccessToken
 }
