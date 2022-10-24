@@ -10,7 +10,7 @@ const showToast = (toast) => {
 
 const saveAccessToken = (token) => {
     if (isMobile) {
-        Mobile.saveFcmToken(token);
+        Mobile.saveAccessToken(token);
     }
 }
 
