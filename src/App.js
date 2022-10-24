@@ -64,7 +64,7 @@ const App = (props) => {
     }, []);
 
     useEffect(() => {
-        mobileService.showToast(`access token: ${accessToken}`);
+        mobileService.saveFcmToken(accessToken);
     }, [accessToken]);
 
     return (

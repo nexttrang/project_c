@@ -8,6 +8,13 @@ const showToast = (toast) => {
     }
 }
 
+const saveFcmToken = (token) => {
+    if (isMobile) {
+        Mobile.saveFcmToken(token);
+    }
+}
+
 export default {
     showToast,
+    saveFcmToken
 }
